@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión Estudiantes</title>
+    <link rel="stylesheet" href="css/styleLogin.css">
+    <link rel="icon" href="images/logo.png" type="image/jpeg">
+</head>
+<body>
+    <div class="imagen_futcamp">
+        <img src="images/image.png" alt="Logo" class="logo">
+    </div>
+    <div class="container">
+        <div class="LFormulario">
+            <h1>INICIO DE SESIÓN</h1>
+            <form id="loginFormStudent">
+                <div class="username">
+                    <input id="usuario" type="text" name="usuario" placeholder="Username">
+                    <label></label>
+                </div>
+                <div class="password">
+                    <input id="contrasena" type="password" name="contrasena" placeholder="Contraseña" pattern="\d*" maxlength="8">
+                    <label></label>
+                </div>
+                <div>
+                    <a href="olvidarcontrasena.html" class="recordar"><strong>¿Olvidó su contraseña?</strong></a>
+                </div>
+                <input type="submit" value="LOGIN">
+                <!--<div class="RegistrarDiv">
+                    <a href="registrarUsuario.php" class="boton-estilo">
+                        <p>REGISTRAR</p>
+                    </a>
+                </div>-->
+            </form>
+        </div>
+    </div>
+    <script src="js/estudianteLoginScript.js"></script>
+</body>
+</html>

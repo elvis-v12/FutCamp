@@ -1,0 +1,186 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f1f1fb;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para el contenido principal */
+.main-content {
+    margin-left: 15%;
+    /* Mismo ancho que la barra lateral */
+    margin-top: 10%;
+    padding: 0.5rem;
+    width: 70%;
+    /* Ancho restante */
+    display: flex;
+    flex-direction: column;
+    /* Ajustar para dispositivos móviles */
+    align-items: center;
+    position: relative;
+    /* Agregado */
+    z-index: 1;
+    /* Agregado */
+}
+
+/* Estilo para el encabezado */
+.header {
+    background-color: #3b3b3b;
+    color: white;
+    padding: 4rem;
+    font-size: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    width: 80%;
+    margin-left: 6%;
+    margin-top: -4%;
+    position: relative;
+    /* Agregado */
+    z-index: 2;
+    /* Agregado */
+}
+
+/* Estilo para el contenedor principal */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    /* Agregado */
+    z-index: 1;
+    /* Agregado */
+}
+
+/* Estilo para el contenedor de la tabla */
+.table-container {
+    margin-top: 20px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    border-radius: 10px;
+    overflow-x: auto;
+    position: relative;
+    /* Agregado */
+    z-index: 1;
+    /* Agregado */
+}
+
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 3%;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Estilo para las acciones de la tabla */
+.table-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Estilo para los botones */
+.button {
+    background-color: #be0f0f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-deshabilitar {
+    background-color: #f90a39;
+    /* Color rojizo */
+    color: white;
+    /* Texto en blanco */
+    border: none;
+    /* Sin bordes */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    font-size: 16px;
+    /* Tamaño de la fuente */
+    cursor: pointer;
+    /* Cursor de mano al pasar sobre el botón */
+    transition: background-color 0.3s ease;
+    /* Transición suave del color de fondo */
+}
+
+.btn-deshabilitar:hover {
+    background-color: #d00933;
+    /* Color rojizo más oscuro al pasar el mouse */
+}
+
+.button:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 768px) {
+    .tabla-estudiantes-container {
+        margin: 0 auto;
+    }
+
+    .tabla-estudiantes,
+    .tabla-estudiantes thead,
+    .tabla-estudiantes tbody,
+    .tabla-estudiantes th,
+    .tabla-estudiantes td,
+    .tabla-estudiantes tr {
+        display: block;
+        /* Hacer que la tabla, el encabezado, el cuerpo, las filas y las celdas sean bloques */
+    }
+
+    .tabla-estudiantes thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .tabla-estudiantes tr {
+        border: 1px solid #ccc;
+        margin-bottom: 5px;
+    }
+
+    .tabla-estudiantes td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+    .tabla-estudiantes td::before {
+        content: attr(data-label);
+        /* Usar el atributo data-label para los encabezados */
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .tabla-estudiantes td:last-child {
+        border-bottom: 0;
+    }
+}

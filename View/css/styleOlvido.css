@@ -1,0 +1,271 @@
+CSS
+{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Decima Nova Pro_3';
+    src: url('fonts/Decima Nova Pro_3.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Decima Nova Pro Heavy_4';
+    src: url('fonts/Decima Nova Pro Heavy_4.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Decima Nova Pro Bold_4';
+    src: url('fonts/Decima Nova Pro Bold_4.otf') format('opentype');
+}
+
+
+:root {
+    --primary-color: #f52b2b;
+    --text-color: #1d1d1d;
+    --bg-color: #f1f1fb;
+}
+
+body{
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    height: 100vh;
+
+    background-image: linear-gradient(
+        to bottom right,
+        #f32b2b 0%,
+        #b91d1d 20%,
+        #140101fa 40%,
+        #01004b 60%,
+        #101670 80%
+    );
+    background-size: 200% 200%;
+
+    animation: movimiento 5s linear infinite
+    alternate;
+}
+
+@keyframes movimiento{
+    from{
+        background-position: 0 0;
+    }
+    to {
+        background-position: 100% 100%;
+    }
+}
+
+.imagen_futcamp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 25px; /* Bordes redondeados */
+}
+
+.logo {
+    max-width: 100%;
+    max-height: 20.5em; /* Ajusta según sea necesario */
+    border-radius: 15px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.LFormulario, .ColumnasPrincipales {
+    background: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    text-align: center;
+}
+
+.ColumnasPrincipales{
+    padding: 2rem;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, button {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #db0933;
+}
+
+.recordar {
+    color: var(--primary-color);
+    text-align: center;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.cssTutorial_TituloA {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-bottom: 10px;
+    color: red;
+    font-size: 1.5rem;
+}
+
+.cssTutorial_Titulo{
+    padding: 2rem;
+}
+
+.check {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+.ui-prime {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #ccc;
+    border-radius: 50px;
+    margin: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+}
+
+.ui-prime:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+input[type="submit"]:hover {
+    border-color: blue; 
+    transition: .5s;
+}
+
+input[type="submit"]{
+    width: 100%;
+    height: 50px;
+    border: 1px solid;
+    background: #2471A3;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.check.filled {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btntecvir {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+#tecvirt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#tecvirt table {
+    margin: auto;
+}
+
+header {
+    size: 50%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+.logo {
+    height: 25rem;
+    margin-right: 10px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+
+    .LFormulario {
+        border-right: 1px solid #ccc;
+        padding-right: 20px;
+    }
+
+    .ColumnasPrincipales {
+        padding-left: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .imagen_futcamp{
+        width: 0;
+    }
+
+    .LFormulario, .ColumnasPrincipales {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .LFormulario {
+        width: 105%;
+        border-right: none;
+        margin-left: -10%;
+    }
+
+    .ColumnasPrincipales {
+        width: 105%;
+        margin-left: -10%;
+    }
+
+    #markpsw{
+        width: 110%;
+        margin-left: -5%;
+    }
+
+    .cssTutorial_Titulo {
+        padding: 1rem;
+    }
+}

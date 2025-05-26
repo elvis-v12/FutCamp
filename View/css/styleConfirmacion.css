@@ -1,0 +1,117 @@
+/* styleReserva.css */
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #000;
+    background-image: linear-gradient(
+        to bottom right,
+        #f32b2b 0%,
+        #b91d1d 20%,
+        #140101fa 40%,
+        #01004b 60%,
+        #101670 80%
+    );
+    background-size: 200% 200%;
+    animation: movimiento 5s linear infinite alternate;
+}
+
+@keyframes movimiento {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 100% 100%;
+    }
+}
+
+.imagen_futcamp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 25px;
+}
+
+.logo {
+    max-width: 100%;
+    max-height: 20.5em;
+    border-radius: 15px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.LFormulario {
+    background: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label-container {
+    margin-bottom: 15px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: gray;
+    color: white;
+}
+
+button:hover {
+    background-color: #db0933;
+}
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .imagen_futcamp {
+        width: 0;
+    }
+
+    .LFormulario {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .LFormulario {
+        width: 105%;
+        border-right: none;
+        margin-left: -10%;
+    }
+}
