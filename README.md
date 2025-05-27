@@ -1,7 +1,7 @@
 
   # APP Recerva de Canchas UCV
 
-Aplicación web para el registro, monitoreo y gestión de alertas médicas y usuarios en un entorno universitario. Diseñada con PHP, MySQL, HTML, JavaScript y CSS, esta herramienta permite la administración eficiente de recerva de canchas dentro de la comunidad universitaria.
+Aplicación web para el registro, monitoreo y de la gestion de reservas de canchas y usuarios en un entorno universitario. Diseñada con PHP, MySQL, HTML, JavaScript y CSS, esta herramienta permite la administración eficiente de recerva de canchas dentro de la comunidad universitaria.
 
 ---
 
