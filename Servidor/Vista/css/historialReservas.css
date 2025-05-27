@@ -690,3 +690,34 @@ body {
         gap: 12px;
     }
 }
+
+.btn-details {
+  background: linear-gradient(135deg, #c40000 0%, #be2a2a 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 4px rgba(196, 0, 0, 0.2);
+}
+
+.btn-details:hover {
+  background: linear-gradient(135deg, #be2a2a 0%, #a91e1e 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(196, 0, 0, 0.3);
+}
+
+.btn-details:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(196, 0, 0, 0.2);
+}
+
+.btn-details i {
+  font-size: 11px;
+}
