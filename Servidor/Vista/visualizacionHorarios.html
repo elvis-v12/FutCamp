@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualización de Horarios - Administrador Deportivo</title>
+    <link rel="stylesheet" href="./css/visualizacionHorarios.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Header -->
+            <div class="sidebar-header">
+                <div class="admin-info">
+                    <div class="admin-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="admin-text">
+                        <h1>ADMINISTRADOR</h1>
+                        <p>Sistema Deportivo</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <button class="nav-item" onclick="window.location.href='./gestionUsuarios.html'">
+                    <i class="fas fa-user"></i>
+                    <span>Gestión de Usuario</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./historialReservas.html'">
+                    <i class="fas fa-history"></i>
+                    <span>Historial de reservas</span>
+                </button>
+                <button class="nav-item active" onclick="window.location.href='./visualizacionHorarios.html'">
+                    <i class="fas fa-calendar"></i>
+                    <span>Visualización de Horarios</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./registroReservas.html'">
+                    <i class="fas fa-trophy"></i>
+                    <span>Registro de Reservas</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./gestionReservas.html'">
+                    <i class="fas fa-cogs"></i>
+                    <span>Gestión de Reservas</span>
+                </button>
+            </nav>
+
+            <!-- Logout Button -->
+            <div class="sidebar-footer">
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-info">
+                    <h2>Visualización de Horarios</h2>
+                    <p>Consulta la disponibilidad del campo sintético por día y hora</p>
+                </div>
+                <div class="header-actions">
+                    <div class="week-navigation">
+                        <button class="btn-week" onclick="cambiarSemana(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                            Anterior
+                        </button>
+                        <span class="current-week" id="current-week">Semana del 15 - 21 Enero 2024</span>
+                        <button class="btn-week" onclick="cambiarSemana(1)">
+                            Siguiente
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <button class="btn-refresh" onclick="actualizarHorarios()">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Actualizar</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-body">
+                <div class="horarios-container">
+                    <!-- Controles Simplificados -->
+                    <div class="controls-section">
+                        <div class="field-info">
+                            <div class="field-icon">
+                                <i class="fas fa-futbol"></i>
+                            </div>
+                            <div class="field-details">
+                                <h3>Campo Sintético</h3>
+                                <p>Horarios de disponibilidad semanal</p>
+                            </div>
+                        </div>
+                        <div class="control-actions">
+                            <button class="btn-today" onclick="irAHoy()">
+                                <i class="fas fa-calendar-check"></i>
+                                Hoy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Estadísticas Simplificadas -->
+                    <div class="stats-quick">
+                        <div class="stat-quick disponibles">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="stat-disponibles">45</span>
+                                <span class="stat-label">Disponibles</span>
+                            </div>
+                        </div>
+                        <div class="stat-quick ocupadas">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-times"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="stat-ocupadas">12</span>
+                                <span class="stat-label">Ocupadas</span>
+                            </div>
+                        </div>
+                        <div class="stat-quick hoy">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="stat-hoy">3</span>
+                                <span class="stat-label">Hoy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Horarios -->
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-calendar-alt"></i>
+                            Horarios de la Semana
+                        </div>
+                        <div class="card-content">
+                            <div class="schedule-container">
+                                <table class="schedule-table" id="schedule-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="time-column">Hora</th>
+                                            <th>Lunes</th>
+                                            <th>Martes</th>
+                                            <th>Miércoles</th>
+                                            <th>Jueves</th>
+                                            <th>Viernes</th>
+                                            <th>Sábado</th>
+                                            <th>Domingo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="schedule-tbody">
+                                        <!-- Las filas se generarán dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leyenda Simplificada -->
+                    <div class="legend-section">
+                        <h4>Leyenda:</h4>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <div class="legend-color disponible"></div>
+                                <span>Disponible</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color ocupado"></div>
+                                <span>Ocupado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles de Reserva -->
+    <div id="reservation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles de la Reserva</h3>
+                <button class="close-btn" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="reservation-details">
+                    <!-- El contenido se generará dinámicamente -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarModal()">Cerrar</button>
+                <button class="btn-primary" onclick="editarReserva()">
+                    <i class="fas fa-edit"></i>
+                    Editar Reserva
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/visualizacionHorarios.js"></script>
+</body>
+</html>
