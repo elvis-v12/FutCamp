@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reservas - Administrador Deportivo</title>
+    <link rel="stylesheet" href="./css/gestionReservas.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Header -->
+            <div class="sidebar-header">
+                <div class="admin-info">
+                    <div class="admin-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="admin-text">
+                        <h1>ADMINISTRADOR</h1>
+                        <p>Sistema Deportivo</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <button class="nav-item" onclick="window.location.href='./index.html'">
+                    <i class="fas fa-user"></i>
+                    <span>Gestión de Usuario</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./index.html'">
+                    <i class="fas fa-history"></i>
+                    <span>Historial de reservas</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./index.html'">
+                    <i class="fas fa-calendar"></i>
+                    <span>Visualización de Horarios</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./registroReservas.html'">
+                    <i class="fas fa-trophy"></i>
+                    <span>Registro de Reservas</span>
+                </button>
+                <button class="nav-item active" onclick="window.location.href='./gestionReservas.html'">
+                    <i class="fas fa-cogs"></i>
+                    <span>Gestión de Reservas</span>
+                </button>
+            </nav>
+
+            <!-- Logout Button -->
+            <div class="sidebar-footer">
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-info">
+                    <h2>Gestión de Reservas</h2>
+                    <p>Administra y controla todas las reservas del sistema</p>
+                </div>
+                <div class="header-actions">
+                    <div class="status-badge">
+                        <i class="fas fa-list"></i>
+                        <span id="total-reservas">2 Reservas Activas</span>
+                    </div>
+                    <button class="btn-add" onclick="agregarReserva()">
+                        <i class="fas fa-plus"></i>
+                        Nueva Reserva
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-body">
+                <div class="reservas-container">
+                    <!-- Filtros y Búsqueda -->
+                    <div class="filters-section">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input"
+                                placeholder="Buscar por nombre, teléfono o comentarios..." onkeyup="filtrarReservas()">
+                        </div>
+                        <div class="filter-buttons">
+                            <select id="filter-day" onchange="filtrarReservas()">
+                                <option value="">Todos los días</option>
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sábado</option>
+                                <option value="domingo">Domingo</option>
+                            </select>
+                            <button class="btn-filter" onclick="limpiarFiltros()">
+                                <i class="fas fa-filter"></i>
+                                Limpiar Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Reservas -->
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-list-alt"></i>
+                            Mis Reservas
+                        </div>
+                        <div class="card-content">
+                            <div class="table-container">
+                                <table class="reservas-table" id="reservas-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombres</th>
+                                            <th>Teléfono</th>
+                                            <th>Número de Personas</th>
+                                            <th>Día</th>
+                                            <th>Hora Entrada</th>
+                                            <th>Hora Salida</th>
+                                            <th>Comentarios</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reservas-tbody">
+                                        <!-- Las filas se generarán dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paginación -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span>Mostrando <span id="showing-count">2</span> de <span id="total-count">2</span>
+                                reservas</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-page" onclick="cambiarPagina(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                                Anterior
+                            </button>
+                            <span class="page-numbers">
+                                <button class="btn-page-number active">1</button>
+                            </span>
+                            <button class="btn-page" onclick="cambiarPagina(1)">
+                                Siguiente
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edición -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Reserva</h3>
+                <button class="close-btn" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-nombre">Nombre Completo</label>
+                            <input type="text" id="edit-nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-telefono">Teléfono</label>
+                            <input type="tel" id="edit-telefono" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-personas">Número de Personas</label>
+                            <input type="number" id="edit-personas" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-dia">Día</label>
+                            <select id="edit-dia" required>
+                                <option value="">Seleccionar día</option>
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sábado</option>
+                                <option value="domingo">Domingo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-hora-entrada">Hora Entrada</label>
+                            <input type="time" id="edit-hora-entrada" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-hora-salida">Hora Salida</label>
+                            <input type="time" id="edit-hora-salida" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-comentarios">Comentarios</label>
+                        <textarea id="edit-comentarios" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn-primary" onclick="guardarEdicion()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/gestionReservas.js"></script>
+</body>
+
+</html>

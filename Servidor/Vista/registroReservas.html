@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador de Reservas Deportivas</title>
+    <link rel="stylesheet" href="./css/registroReservas.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Header -->
+            <div class="sidebar-header">
+                <div class="admin-info">
+                    <div class="admin-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="admin-text">
+                        <h1>ADMINISTRADOR</h1>
+                        <p>Sistema Deportivo</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <button class="nav-item" onclick="window.location.href='./index.html'">
+                    <i class="fas fa-user"></i>
+                    <span>Gestión de Usuario</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./index.html'">
+                    <i class="fas fa-history"></i>
+                    <span>Historial de reservas</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./index.html'">
+                    <i class="fas fa-calendar"></i>
+                    <span>Visualización de Horarios</span>
+                </button>
+                <button class="nav-item active" onclick="window.location.href='./registroReservas.html'">
+                    <i class="fas fa-trophy"></i>
+                    <span>Registro de Reservas</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./gestionReservas.html'">
+                    <i class="fas fa-cogs"></i>
+                    <span>Gestión de Reservas</span>
+                </button>
+            </nav>
+
+            <!-- Logout Button -->
+            <div class="sidebar-footer">
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-info">
+                    <h2>Registro de Reservas</h2>
+                    <p>Gestiona las reservas de campos deportivos</p>
+                </div>
+                <div class="status-badge">
+                    <i class="fas fa-trophy"></i>
+                    Sistema Activo
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-body">
+                <div class="content-grid">
+                    <!-- Form Section -->
+                    <div class="form-section">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-users"></i>
+                                Datos de la Reserva
+                            </div>
+                            <div class="card-content">
+                                <div class="form-group">
+                                    <label for="codigo">Código de Estudiante</label>
+                                    <div class="input-group">
+                                        <input type="text" id="codigo" placeholder="Ingrese código">
+                                        <button class="search-btn">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nombre">Nombre Completo</label>
+                                    <input type="text" id="nombre" placeholder="Nombre del estudiante">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="tel" id="telefono" placeholder="Número de contacto">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="personas">Número de Personas</label>
+                                    <input type="number" id="personas" placeholder="Cantidad de participantes" min="1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dia">Día de la Reserva</label>
+                                    <select id="dia">
+                                        <option value="">Seleccione un día</option>
+                                        <option value="lunes">Lunes</option>
+                                        <option value="martes">Martes</option>
+                                        <option value="miercoles">Miércoles</option>
+                                        <option value="jueves">Jueves</option>
+                                        <option value="viernes">Viernes</option>
+                                        <option value="sabado">Sábado</option>
+                                        <option value="domingo">Domingo</option>
+                                    </select>
+                                </div>
+
+                                <div class="time-group">
+                                    <div class="form-group">
+                                        <label for="hora-entrada">Hora Entrada</label>
+                                        <select id="hora-entrada">
+                                            <option value="">--:--</option>
+                                            <option value="08:00">08:00</option>
+                                            <option value="09:00">09:00</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="11:00">11:00</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="22:00">22:00</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hora-salida">Hora Salida</label>
+                                        <select id="hora-salida">
+                                            <option value="">--:--</option>
+                                            <option value="08:00">08:00</option>
+                                            <option value="09:00">09:00</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="11:00">11:00</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="22:00">22:00</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="comentarios">Comentarios o Peticiones Especiales</label>
+                                    <textarea id="comentarios"
+                                        placeholder="Ingrese observaciones adicionales..."></textarea>
+                                </div>
+
+                                <div class="button-group">
+                                    <button class="btn-primary" onclick="reservar()">
+                                        <i class="fas fa-save"></i>
+                                        Reservar
+                                    </button>
+                                    <button class="btn-secondary" onclick="limpiarCampos()">
+                                        <i class="fas fa-trash"></i>
+                                        Limpiar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Schedule Grid -->
+                    <div class="schedule-section">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-calendar"></i>
+                                Horarios Disponibles
+                            </div>
+                            <div class="card-content schedule-content">
+                                <div class="schedule-table-container">
+                                    <table class="schedule-table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <i class="fas fa-clock"></i>
+                                                    Hora
+                                                </th>
+                                                <th>Lunes</th>
+                                                <th>Martes</th>
+                                                <th>Miércoles</th>
+                                                <th>Jueves</th>
+                                                <th>Viernes</th>
+                                                <th>Sábado</th>
+                                                <th>Domingo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="schedule-body">
+                                            <!-- Las filas se generarán con JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/registroResevas.js"></script>
+</body>
+
+</html>
