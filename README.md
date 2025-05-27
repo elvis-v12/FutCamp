@@ -36,7 +36,7 @@ cd APP-Medica-UCV
 ### 3. Importar la base de datos
 
 - Abre **phpMyAdmin** desde `http://localhost/phpmyadmin`
-- Crea una base de datos llamada `appmedica_ucv`
+- Crea una base de datos llamada `futcamp`
 - Importa el archivo `.sql` ubicado en la carpeta `/BaseDatos` del proyecto
 
 ### 4. Ejecutar la aplicación
@@ -44,7 +44,7 @@ cd APP-Medica-UCV
 Abre el navegador y dirígete a:
 
 ```
-http://localhost/APP-Medica-UCV/Servidor/Vista/index.html
+http://localhost/FutCamp/Servidor/Vista/index.html
 ```
 
 ---
@@ -54,7 +54,7 @@ http://localhost/APP-Medica-UCV/Servidor/Vista/index.html
 ### Clonar el repositorio
 
 ```bash
-git clone https://github.com/elvis-v12/APP-Medica-UCV.git
+git clone https://github.com/elvis-v12/FutCamp.git
 ```
 
 ### Crear una nueva rama
@@ -90,7 +90,7 @@ git merge nombre-de-rama
 ## 📁 Estructura del proyecto
 
 ```
-APP-Medica-UCV/
+FutCamp/
 │
 ├── BaseDatos/              → Archivos .sql para importar en phpMyAdmin
 ├── Cliente/                → Lógica del cliente (formularios, vistas, js)
