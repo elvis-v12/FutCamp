@@ -4,79 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión</title>
-    <link rel="stylesheet" href="css/loginAdmin.css">
-    <link rel="icon" href="images/logo.png" type="image/jpeg">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/loginEstudiante.css">
 </head>
 
 <body>
-    <div class="imagen_futcamp">
-        <img src="images/image.png" alt="Logo" class="logo">
-    </div>
-    <div class="container">
-        <div class="LFormulario">
-            <h1>INICIO DE SESIÓN</h1>
-            <form id="loginFormAdmin">
-                <div class="username">
-                    <input id="usuario" type="text" name="usuario" placeholder="Username">
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form action="#">
+                <div class="logo">
+                    <img src="../Vista/img/ucvitoFut.ico">
+                    <h1>FutCamp</h1>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Nombre de Usuario" required>
                     <label></label>
                 </div>
-                <div class="password">
-                    <input id="contrasena" type="password" name="contrasena" placeholder="Contraseña" readonly>
+                <div class="input-box">
+                    <input type="password" placeholder="Contraseña" required>
                     <label></label>
                 </div>
-                <div>
-                    <a href="olvidarcontrasena.html" class="recordar"><strong>¿Olvidó su contraseña?</strong></a>
-                </div>
-                <input name="buttonIniciar" type="submit" value="LOGIN">
-                <!--<div class="RegistrarDiv">
-                    <a href="registrarUsuario.php" class="boton-estilo">
-                        <P>REGISTRAR</P>
-                    </a>
-                </div>-->
+                <button>Registrarse</button>
             </form>
         </div>
-        <div class="ColumnasPrincipales">
-            <div class="cssTutorial_Titulo">
-                <span class="cssTutorial_TituloA">TECLADO VIRTUAL</span><br>
-                <span class="cssTutorial_TituloB">Clave de 8 dígitos</span>
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <div class="logo">
+                    <img src="../Vista/img/ucvitoFut.ico">
+                    <h1>FutCamp</h1>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Nombre de Usuario" required>
+                    <label></label>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Contraseña" required>
+                    <label></label>
+                </div>
+                <a href="#" class="forgot">¿Olvidaste tu Contraseña?</a>
+                <button>Iniciar Sesión</button>
+            </form>
+        </div>
+        <div class="overlay-container" id="overlayCon">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>¡Bienvenido!</h1>
+                    <p>Inicie sesión con sus datos personales</p>
+                    <button>Iniciar Sesión</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>¡Bienvenido!</h1>
+                    <p>Ingresa tus datos personales y comienza la experiencia FutCamp</p>
+                    <button>Registrarse</button>
+                </div>
             </div>
-            <div id="markpsw">
-                <div class="check" id="mrk1"></div>
-                <div class="check" id="mrk2"></div>
-                <div class="check" id="mrk3"></div>
-                <div class="check" id="mrk4"></div>
-                <div class="check" id="mrk5"></div>
-                <div class="check" id="mrk6"></div>
-                <div class="check" id="mrk7"></div>
-                <div class="check" id="mrk8"></div>
-            </div>
-            <div id="tecvirt">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(7)">7</a></td>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(8)">8</a></td>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(4)">4</a></td>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(6)">6</a></td>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(5)">5</a></td>
-                            <td><a id="btnprevpsw" href="#" onclick="removeDigit()"><img src="./images/prev.png" border="0" class="btntecvir"></a></td>
-                        </tr>
-                        <tr>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(3)">3</a></td>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(0)">0</a></td>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(2)">2</a></td>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(1)">1</a></td>
-                            <td><a class="ui-prime" href="#" onclick="addDigit(9)">9</a></td>
-                            <td><a id="btnLimpiar" href="#" onclick="clearDigits()"><img src="./images/erase.png" border="0" class="btntecvir"></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <button id="overlayBtn"></button>
         </div>
     </div>
-    <script src="js/loginScript.js"></script>
-    <script src="js/adminLoginScript.js"></script>
+    <script src="../Vista/js/estudianteLoginScript.js"></script>
 </body>
 
 </html>

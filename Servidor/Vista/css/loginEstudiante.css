@@ -19,8 +19,8 @@
 }
 
 :root {
-    --linear-grad: linear-gradient(to right, #9e2424, #be2a2a);
-    --grad-clr1: #301414;
+    --linear-grad: linear-gradient(to right, #c40000, #be2a2a);
+    --grad-clr1: #c40000;
     --grad-clr2: #be2a2a;
 }
 
