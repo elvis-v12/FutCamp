@@ -24,14 +24,14 @@ Aplicación web para el registro, monitoreo y gestión de alertas médicas y usu
 
 ```bash
 git clone https://github.com/elvis-v12/FutCamp.git
-cd APP-Medica-UCV
+cd FutCamp
 ```
 
 ### 2. Configurar entorno local
 
 - Inicia **XAMPP** y activa los módulos `Apache` y `MySQL`.
 - Copia la carpeta del proyecto a la ruta:
-  `C:\xampp\htdocs\APP-Medica-UCV`
+  `C:\xampp\htdocs\FutCamp`
 
 ### 3. Importar la base de datos
 
