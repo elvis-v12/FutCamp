@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css/loginEstudiante.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
@@ -17,13 +17,30 @@
                     <h1>FutCamp</h1>
                 </div>
                 <div class="input-box">
-                    <input type="text" placeholder="Nombre de Usuario" required>
+                    <input type="text" placeholder="Usuario" required>
+                    <label></label>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Nombres" required>
+                    <label></label>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Apellidos" required>
+                    <label></label>
+                </div>
+                <div class="input-box">
+                    <input type="email" placeholder="Correo electrónico" required>
                     <label></label>
                 </div>
                 <div class="input-box">
                     <input type="password" placeholder="Contraseña" required>
                     <label></label>
                 </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Confirmar Contraseña" required>
+                    <label></label>
+                </div>
+
                 <button>Registrarse</button>
             </form>
         </div>
@@ -41,7 +58,7 @@
                     <input type="password" placeholder="Contraseña" required>
                     <label></label>
                 </div>
-                <a href="#" class="forgot">¿Olvidaste tu Contraseña?</a>
+                <a href="../Vista/r-password.html" class="forgot">¿Olvidaste tu Contraseña?</a>
                 <button>Iniciar Sesión</button>
             </form>
         </div>
@@ -61,7 +78,7 @@
             <button id="overlayBtn"></button>
         </div>
     </div>
-    <script src="../Vista/js/estudianteLoginScript.js"></script>
+    <script src="../Vista/js/loginScript.js"></script>
 </body>
 
 </html>
