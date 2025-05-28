@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Usuarios - Administrador Deportivo</title>
-    <link rel="stylesheet" href="./css/gestionUsuarios.css">
+    <title>Gestión de Estudiantes - Administrador Deportivo</title>
+    <link rel="stylesheet" href="./css/gestionEstudiantes.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -26,9 +26,9 @@
 
             <!-- Navigation -->
             <nav class="sidebar-nav">
-                <button class="nav-item active" onclick="window.location.href='./gestionUsuarios.html'">
+                <button class="nav-item active" onclick="window.location.href='./gestionEstudiantes.html'">
                     <i class="fas fa-user"></i>
-                    <span>Gestión de Usuario</span>
+                    <span>Gestión de Estudiantes</span>
                 </button>
                 <button class="nav-item" onclick="window.location.href='./historialReservas.html'">
                     <i class="fas fa-history"></i>
@@ -46,6 +46,10 @@
                     <i class="fas fa-cogs"></i>
                     <span>Gestión de Reservas</span>
                 </button>
+                <button class="nav-item" onclick="window.location.href='./perfilAdministrador.html'">
+                    <i class="fas fa-user-cog"></i>
+                    <span>Mi Perfil</span>
+                </button>
             </nav>
 
             <!-- Logout Button -->
@@ -62,17 +66,17 @@
             <!-- Header -->
             <header class="content-header">
                 <div class="header-info">
-                    <h2>Gestión de Usuarios</h2>
-                    <p>Administra y controla todos los usuarios del sistema</p>
+                    <h2>Gestión de Estudiantes</h2>
+                    <p>Administra y controla todos los estudiantes del sistema</p>
                 </div>
                 <div class="header-actions">
                     <div class="status-badge">
                         <i class="fas fa-users"></i>
-                        <span id="total-usuarios">4 Usuarios Registrados</span>
+                        <span id="total-usuarios">4 Estudiantes Registrados</span>
                     </div>
                     <button class="btn-add" onclick="agregarUsuario()">
                         <i class="fas fa-user-plus"></i>
-                        Nuevo Usuario
+                        Nuevo Estudiante
                     </button>
                 </div>
             </header>
@@ -107,7 +111,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-users"></i>
-                            Usuarios del Sistema
+                            Estudiantes Registrados en el Sistema
                         </div>
                         <div class="card-content">
                             <div class="table-container">
@@ -136,7 +140,7 @@
                     <!-- Paginación -->
                     <div class="pagination-container">
                         <div class="pagination-info">
-                            <span>Mostrando <span id="showing-count">4</span> de <span id="total-count">4</span> usuarios</span>
+                            <span>Mostrando <span id="showing-count">4</span> de <span id="total-count">4</span> estudiantes</span>
                         </div>
                         <div class="pagination-controls">
                             <button class="btn-page" onclick="cambiarPagina(-1)">
@@ -161,18 +165,18 @@
     <div id="user-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modal-title">Agregar Usuario</h3>
+                <h3 id="modal-title">Agregar Estudiante</h3>
                 <button class="close-btn" onclick="cerrarModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="user-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="user-codigo">Código de Usuario *</label>
+                            <label for="user-codigo">Código de Estudiante *</label>
                             <input type="text" id="user-codigo" required maxlength="10">
                         </div>
                         <div class="form-group">
-                            <label for="user-usuario">Nombre de Usuario *</label>
+                            <label for="user-usuario">Nombre de Estudiante *</label>
                             <input type="text" id="user-usuario" required maxlength="20">
                         </div>
                     </div>
@@ -207,11 +211,11 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                <button class="btn-primary" onclick="guardarUsuario()">Guardar Usuario</button>
+                <button class="btn-primary" onclick="guardarUsuario()">Guardar Estudiante</button>
             </div>
         </div>
     </div>
 
-    <script src="./js/gestionUsuarios.js"></script>
+    <script src="./js/gestionEstudiantes.js"></script>
 </body>
 </html>
