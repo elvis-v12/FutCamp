@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Reservas - Administrador Deportivo</title>
-    <link rel="stylesheet" href="./css/gestionReservas.css">
+    <title>Historial de Reservas - Administrador Deportivo</title>
+    <link rel="stylesheet" href="./css/historialReservas.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="app-container">
         <!-- Sidebar -->
@@ -32,7 +30,7 @@
                     <i class="fas fa-user"></i>
                     <span>Gestión de Usuario</span>
                 </button>
-                <button class="nav-item" onclick="window.location.href='./historialReservas.html'">
+                <button class="nav-item active" onclick="window.location.href='./historialReservas.html'">
                     <i class="fas fa-history"></i>
                     <span>Historial de reservas</span>
                 </button>
@@ -44,7 +42,7 @@
                     <i class="fas fa-trophy"></i>
                     <span>Registro de Reservas</span>
                 </button>
-                <button class="nav-item active" onclick="window.location.href='./gestionReservas.html'">
+                <button class="nav-item" onclick="window.location.href='./gestionReservas.html'">
                     <i class="fas fa-cogs"></i>
                     <span>Gestión de Reservas</span>
                 </button>
@@ -64,41 +62,51 @@
             <!-- Header -->
             <header class="content-header">
                 <div class="header-info">
-                    <h2>Gestión de Reservas</h2>
-                    <p>Administra y controla todas las reservas del sistema</p>
+                    <h2>Historial de Reservas</h2>
+                    <p>Consulta el registro completo de todas las reservas realizadas</p>
                 </div>
                 <div class="header-actions">
                     <div class="status-badge">
-                        <i class="fas fa-list"></i>
-                        <span id="total-reservas">2 Reservas Activas</span>
+                        <i class="fas fa-chart-line"></i>
+                        <span id="total-historial">6 Reservas en Historial</span>
                     </div>
-                    <button class="btn-add" onclick="agregarReserva()">
-                        <i class="fas fa-plus"></i>
-                        Nueva Reserva
+                    <button class="btn-refresh" onclick="actualizarHistorial()">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Actualizar</span>
                     </button>
                 </div>
             </header>
 
             <!-- Content -->
             <div class="content-body">
-                <div class="reservas-container">
+                <div class="historial-container">
                     <!-- Filtros y Búsqueda -->
                     <div class="filters-section">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="search-input"
-                                placeholder="Buscar por nombre, teléfono o comentarios..." onkeyup="filtrarReservas()">
+                            <input type="text" id="search-input" placeholder="Buscar por nombre, teléfono, código o comentarios..." onkeyup="filtrarHistorial()">
                         </div>
                         <div class="filter-buttons">
-                            <select id="filter-day" onchange="filtrarReservas()">
-                                <option value="">Todos los días</option>
-                                <option value="lunes">Lunes</option>
-                                <option value="martes">Martes</option>
-                                <option value="miercoles">Miércoles</option>
-                                <option value="jueves">Jueves</option>
-                                <option value="viernes">Viernes</option>
-                                <option value="sabado">Sábado</option>
-                                <option value="domingo">Domingo</option>
+                            <select id="filter-estado" onchange="filtrarHistorial()">
+                                <option value="">Todos los estados</option>
+                                <option value="confirmada">Confirmadas</option>
+                                <option value="completada">Completadas</option>
+                                <option value="cancelada">Canceladas</option>
+                            </select>
+                            <select id="filter-mes" onchange="filtrarHistorial()">
+                                <option value="">Todos los meses</option>
+                                <option value="0">Enero</option>
+                                <option value="1">Febrero</option>
+                                <option value="2">Marzo</option>
+                                <option value="3">Abril</option>
+                                <option value="4">Mayo</option>
+                                <option value="5">Junio</option>
+                                <option value="6">Julio</option>
+                                <option value="7">Agosto</option>
+                                <option value="8">Septiembre</option>
+                                <option value="9">Octubre</option>
+                                <option value="10">Noviembre</option>
+                                <option value="11">Diciembre</option>
                             </select>
                             <button class="btn-filter" onclick="limpiarFiltros()">
                                 <i class="fas fa-filter"></i>
@@ -106,34 +114,39 @@
                             </button>
                         </div>
                     </div>
-
-                    <!-- Tabla de Reservas -->
+                    <!-- Tabla de Historial Simplificada -->
                     <div class="card">
                         <div class="card-header">
-                            <i class="fas fa-list-alt"></i>
-                            Mis Reservas
+                            <i class="fas fa-history"></i>
+                            Reservas
                         </div>
                         <div class="card-content">
                             <div class="table-container">
-                                <table class="reservas-table" id="reservas-table">
+                                <table class="historial-table" id="historial-table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Nombres</th>
-                                            <th>Teléfono</th>
-                                            <th>Número de Personas</th>
                                             <th>Día</th>
-                                            <th>Hora Entrada</th>
-                                            <th>Hora Salida</th>
-                                            <th>Comentarios</th>
+                                            <th>Horario</th>
+                                            <th>Personas</th>
                                             <th>Estado</th>
+                                            <th>Fecha</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="reservas-tbody">
+                                    <tbody id="historial-tbody">
                                         <!-- Las filas se generarán dinámicamente -->
                                     </tbody>
                                 </table>
+                            </div>
+                            
+                            <!-- Botón Exportar -->
+                            <div class="export-section">
+                                <button class="btn-export" onclick="exportarHistorial()">
+                                    <i class="fas fa-download"></i>
+                                    Exportar Historial
+                                </button>
+                                <span class="export-info">Exportar historial completo a CSV</span>
                             </div>
                         </div>
                     </div>
@@ -141,8 +154,7 @@
                     <!-- Paginación -->
                     <div class="pagination-container">
                         <div class="pagination-info">
-                            <span>Mostrando <span id="showing-count">2</span> de <span id="total-count">2</span>
-                                reservas</span>
+                            <span>Mostrando <span id="showing-count">6</span> de <span id="total-count">6</span> reservas</span>
                         </div>
                         <div class="pagination-controls">
                             <button class="btn-page" onclick="cambiarPagina(-1)">
@@ -163,68 +175,24 @@
         </div>
     </div>
 
-    <!-- Modal de Edición -->
-    <div id="edit-modal" class="modal">
+    <!-- Modal de Detalles Mejorado -->
+    <div id="details-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Editar Reserva</h3>
+                <h3>Detalles de la Reserva</h3>
                 <button class="close-btn" onclick="cerrarModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="edit-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="edit-nombre">Nombre Completo</label>
-                            <input type="text" id="edit-nombre" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-telefono">Teléfono</label>
-                            <input type="tel" id="edit-telefono" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="edit-personas">Número de Personas</label>
-                            <input type="number" id="edit-personas" min="1" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-dia">Día</label>
-                            <select id="edit-dia" required>
-                                <option value="">Seleccionar día</option>
-                                <option value="lunes">Lunes</option>
-                                <option value="martes">Martes</option>
-                                <option value="miercoles">Miércoles</option>
-                                <option value="jueves">Jueves</option>
-                                <option value="viernes">Viernes</option>
-                                <option value="sabado">Sábado</option>
-                                <option value="domingo">Domingo</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="edit-hora-entrada">Hora Entrada</label>
-                            <input type="time" id="edit-hora-entrada" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-hora-salida">Hora Salida</label>
-                            <input type="time" id="edit-hora-salida" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-comentarios">Comentarios</label>
-                        <textarea id="edit-comentarios" rows="3"></textarea>
-                    </div>
-                </form>
+                <div id="details-content">
+                    <!-- El contenido se generará dinámicamente -->
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                <button class="btn-primary" onclick="guardarEdicion()">Guardar Cambios</button>
+                <button class="btn-secondary" onclick="cerrarModal()">Cerrar</button>
             </div>
         </div>
     </div>
 
-    <script src="./js/gestionReservas.js"></script>
+    <script src="./js/historialReservas.js"></script>
 </body>
-
 </html>

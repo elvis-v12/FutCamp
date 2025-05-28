@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('loginFormStudent').addEventListener('submit', function (e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -16,4 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error('Error:', error));
     });
+});*/
+const container = document.getElementById('container');
+const overlayCon = document.getElementById('overlayCon');
+const overlayBtn = document.getElementById('overlayBtn');
+
+overlayBtn.addEventListener('click', () => {
+    container.classList.toggle('right-panel-active');
 });
+

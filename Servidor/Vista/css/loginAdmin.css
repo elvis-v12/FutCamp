@@ -1,0 +1,226 @@
+/* ===== RESET Y FUENTES ===== */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Decima Nova Pro_3';
+    src: url('fonts/Decima Nova Pro_3.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Decima Nova Pro Heavy_4';
+    src: url('fonts/Decima Nova Pro Heavy_4.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Decima Nova Pro Bold_4';
+    src: url('fonts/Decima Nova Pro Bold_4.otf') format('opentype');
+}
+
+/* ===== VARIABLES ===== */
+:root {
+    --primary-color: #f52b2b;
+    --text-color: #1d1d1d;
+    --bg-color: #f1f1fb;
+}
+
+/* ===== DISEÑO GENERAL ===== */
+body {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    height: 100vh;
+    background-image: linear-gradient(to bottom right, #f32b2b, #b91d1d, #140101fa, #01004b, #101670);
+    background-size: 200% 200%;
+    animation: movimiento 5s linear infinite alternate;
+}
+
+@keyframes movimiento {
+    from { background-position: 0 0; }
+    to { background-position: 100% 100%; }
+}
+
+/* ===== CONTENEDORES ===== */
+.imagen_futcamp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 25px;
+}
+
+.logo {
+    max-width: 100%;
+    max-height: 24.5em;
+    border-radius: 15px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.LFormulario, .ColumnasPrincipales {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* ===== FORMULARIO ===== */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, button {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    background: #2471A3;
+    color: white;
+    border-radius: 25px;
+    height: 50px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    border-color: blue;
+    transition: 0.5s;
+}
+
+/* ===== ENLACES ===== */
+.recordar {
+    color: var(--primary-color);
+    text-align: center;
+    display: block;
+    margin-bottom: 15px;
+}
+
+a.boton-estilo {
+    text-decoration: none;
+}
+
+/* ===== TECLADO VIRTUAL ===== */
+.cssTutorial_TituloA {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-bottom: 10px;
+    color: red;
+    font-size: 1.5rem;
+}
+
+.cssTutorial_Titulo {
+    padding: 2rem;
+}
+
+#markpsw {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.check {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    border-radius: 50%;
+}
+
+.check.filled {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+#tecvirt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#tecvirt table {
+    margin: auto;
+}
+
+.ui-prime {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #ccc;
+    border-radius: 50px;
+    margin: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+}
+
+.ui-prime:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.btntecvir {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row;
+    }
+
+    .LFormulario {
+        border-right: 1px solid #ccc;
+        padding-right: 20px;
+    }
+
+    .ColumnasPrincipales {
+        padding-left: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .LFormulario,
+    .ColumnasPrincipales {
+        width: 105%;
+        margin-left: -10%;
+        padding: 10px;
+    }
+
+    .imagen_futcamp {
+        width: 0;
+    }
+
+    #markpsw {
+        width: 110%;
+        margin-left: -5%;
+    }
+}
