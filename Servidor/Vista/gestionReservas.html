@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Reservas - Administrador Deportivo</title>
-         <link rel="icon" type="image/x-icon" href="img/ucvitoFut.ico">
+     <link rel="icon" type="image/x-icon" href="img/ucvitoFut.ico">
     <link rel="stylesheet" href="./css/gestionReservas.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -29,9 +29,9 @@
 
             <!-- Navigation -->
             <nav class="sidebar-nav">
-                <button class="nav-item" onclick="window.location.href='./gestionUsuarios.html'">
+                <button class="nav-item" onclick="window.location.href='./gestionEstudiantes.html'">
                     <i class="fas fa-user"></i>
-                    <span>Gestión de Usuario</span>
+                    <span>Gestión de Estudiantes</span>
                 </button>
                 <button class="nav-item" onclick="window.location.href='./historialReservas.html'">
                     <i class="fas fa-history"></i>
@@ -48,6 +48,9 @@
                 <button class="nav-item active" onclick="window.location.href='./gestionReservas.html'">
                     <i class="fas fa-cogs"></i>
                     <span>Gestión de Reservas</span>
+                <button class="nav-item" onclick="window.location.href='./perfilAdministrador.html'">
+                    <i class="fas fa-user-cog"></i>
+                    <span>Mi Perfil</span>
                 </button>
             </nav>
 
@@ -226,6 +229,7 @@
     </div>
 
     <script src="./js/gestionReservas.js"></script>
+    <script src="../Vista/js/logout.js"></script>
 </body>
 
 </html>

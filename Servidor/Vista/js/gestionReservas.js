@@ -1,56 +1,24 @@
 // Variables globales
-let reservas = [
-    {
-        id: 1,
-        nombre: "Patrik Laura Vega",
-        telefono: "958046735",
-        personas: 5,
-        dia: "lunes",
-        horaEntrada: "09:00",
-        horaSalida: "11:00",
-        comentarios: "cancha futbol",
-        estado: "activa",
-        fechaCreacion: new Date('2024-01-15')
-    },
-    {
-        id: 2,
-        nombre: "Daniel Infante Cornelio",
-        telefono: "933666813",
-        personas: 9,
-        dia: "martes",
-        horaEntrada: "12:00",
-        horaSalida: "13:00",
-        comentarios: "cancha voley",
-        estado: "activa",
-        fechaCreacion: new Date('2024-01-16')
-    },
-    {
-        id: 3,
-        nombre: "María González López",
-        telefono: "987654321",
-        personas: 6,
-        dia: "miercoles",
-        horaEntrada: "15:00",
-        horaSalida: "17:00",
-        comentarios: "cancha basquet",
-        estado: "completada",
-        fechaCreacion: new Date('2024-01-10')
-    },
-    {
-        id: 4,
-        nombre: "Carlos Rodríguez Martín",
-        telefono: "912345678",
-        personas: 8,
-        dia: "jueves",
-        horaEntrada: "18:00",
-        horaSalida: "20:00",
-        comentarios: "cancha tenis",
-        estado: "cancelada",
-        fechaCreacion: new Date('2024-01-12')
-    }
-];
+let reservas = [];
+let reservasFiltradas = [];
+fetch("../../Servidor/Controlador/gestionReservas.php")
+    .then(response => response.json())
+    .then(data => {
+        reservas = data.map(reserva => ({
+            ...reserva,
+            fechaCreacion: new Date(reserva.fechaCreacion) // Convertir fecha desde string
+        }));
 
-let reservasFiltradas = [...reservas];
+        // Aquí puedes llamar a una función para renderizar las reservas en la interfaz
+        console.log(reservas); // solo como ejemplo
+        reservasFiltradas = [...reservas];
+        renderizarReservas();
+        actualizarContadores();
+    })
+    .catch(error => {
+        console.error("JS Error al obtener las reservas:", error);
+    });
+
 let reservaEditando = null;
 let paginaActual = 1;
 const reservasPorPagina = 10;

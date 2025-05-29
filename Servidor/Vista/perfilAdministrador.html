@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Administrador - Sistema Deportivo</title>
+     <link rel="icon" type="image/x-icon" href="img/ucvitoFut.ico">
+    <link rel="stylesheet" href="./css/perfilAdministrador.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Header -->
+            <div class="sidebar-header">
+                <div class="admin-info">
+                    <div class="admin-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="admin-text">
+                        <h1>ADMINISTRADOR</h1>
+                        <p>Sistema Deportivo</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <button class="nav-item" onclick="window.location.href='./gestionEstudiantes.html'">
+                    <i class="fas fa-user"></i>
+                    <span>Gestión de Estudiantes</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./historialReservas.html'">
+                    <i class="fas fa-history"></i>
+                    <span>Historial de reservas</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./visualizacionHorarios.html'">
+                    <i class="fas fa-calendar"></i>
+                    <span>Visualización de Horarios</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./registroReservas.html'">
+                    <i class="fas fa-trophy"></i>
+                    <span>Registro de Reservas</span>
+                </button>
+                <button class="nav-item" onclick="window.location.href='./gestionReservas.html'">
+                    <i class="fas fa-cogs"></i>
+                    <span>Gestión de Reservas</span>
+                </button>
+                <button class="nav-item active" onclick="window.location.href='./perfilAdministrador.html'">
+                    <i class="fas fa-user-cog"></i>
+                    <span>Mi Perfil</span>
+                </button>
+            </nav>
+
+            <!-- Logout Button -->
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="cerrarSesion()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-info">
+                    <h2>Mi Perfil</h2>
+                    <p>Gestiona tu información personal y configuración de cuenta</p>
+                </div>
+                <div class="header-actions">
+                   <div class="status-badge">
+                      <i class="fas fa-shield-check"></i>
+                     <span id="estado">Administrador Activo</span>
+                </div>
+
+                    <button class="btn-edit-profile" onclick="toggleEditMode()">
+                        <i class="fas fa-edit"></i>
+                        <span id="edit-btn-text">Editar Perfil</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-body">
+                <div class="profile-container">
+                    <!-- Profile Card -->
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <div class="avatar-circle">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <button class="change-avatar-btn" >
+                                <img id="preview-img" src="" alt="Avatar" class="avatar-img">     
+                             </button>
+                            </div>
+                            <div class="profile-info">
+                                <h3 id="admin-name">Juan Carlos Pérez</h3>
+                                <p id="admin-role">Administrador Principal</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Information Card -->
+                    <div class="info-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-user"></i>
+                                Información del Administrador
+                            </div>
+                            <div class="card-content">
+                                <form id="admin-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" id="nombre" name="nombres" value="Juan Carlos" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="apellido">Apellido</label>
+                                            <input type="text" id="apellido" name="apellidos" value="Pérez González" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="email">Correo Electrónico</label>
+                                            <input type="email" id="email" name="correo" value="admin@sistemadeportivo.com" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="usuario">Nombre de Usuario</label>
+                                            <input type="text" id="usuario" name="usuario" value="admin_principal" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="imagen_perfil">Imagen de Perfil</label>
+                                            <input type="file" id="imagen_perfil" name="imagen_perfil" accept="image/*">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons" id="action-buttons" style="display: none;">
+                        <button class="btn-save" onclick="guardarCambios()">
+                            <i class="fas fa-save"></i>
+                            Guardar Cambios
+                        </button>
+                        <button class="btn-cancel" onclick="cancelarEdicion()">
+                            <i class="fas fa-times"></i>
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/perfilAdministrador.js"></script>
+    <script src="../Vista/js/logout.js"></script>
+</body>
+</html>

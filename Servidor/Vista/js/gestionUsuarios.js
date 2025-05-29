@@ -1,52 +1,28 @@
-// Variables globales
-let usuarios = [
-    {
-        id: 2,
-        codigo: "7002708724",
-        usuario: "laurap",
-        nombres: "Patrik Laura Ynga",
-        telefono: "958046785",
-        email: "plaurayn@ucvvirtual.edu.pe",
-        estado: 1,
-        fechaRegistro: new Date('2024-01-15'),
-        password: "123456"
-    },
-    {
-        id: 4,
-        codigo: "11111111",
-        usuario: "boyer",
-        nombres: "alberto",
-        telefono: "999999999",
-        email: "dinfanteco@ucvvirtual.edu.pe",
-        estado: 0,
-        fechaRegistro: new Date('2024-01-16'),
-        password: "123456"
-    },
-    {
-        id: 5,
-        codigo: "12345678",
-        usuario: "mariag",
-        nombres: "María González López",
-        telefono: "987654321",
-        email: "maria.gonzalez@ucvvirtual.edu.pe",
-        estado: 1,
-        fechaRegistro: new Date('2024-01-10'),
-        password: "123456"
-    },
-    {
-        id: 6,
-        codigo: "87654321",
-        usuario: "carlosr",
-        nombres: "Carlos Rodríguez Martín",
-        telefono: "912345678",
-        email: "carlos.rodriguez@ucvvirtual.edu.pe",
-        estado: 1,
-        fechaRegistro: new Date('2024-01-12'),
-        password: "123456"
-    }
-];
 
-let usuariosFiltrados = [...usuarios];
+// Variables globales
+let usuarios = [];
+let usuariosFiltrados = [];
+fetch("../../Servidor/Controlador/gestionUsuarios.php")
+    .then(response => response.json())
+    .then(data => {
+        if (!Array.isArray(data)) {
+            if (data.error === "Sesión expirada.") {
+                alert("Tu sesión ha expirado. Por favor vuelve a iniciar sesión.");
+                window.location.href = "../Vista/index.html"; // Redirigir al login
+            }
+            return;
+        }
+
+        usuarios = data.map(usuario => ({ ...usuario }));
+        usuariosFiltrados = [...usuarios];
+        renderizarUsuarios();
+        actualizarContadores();
+    })
+    .catch(error => {
+        console.error("JS Error al obtener los usuarios:", error);
+    });
+
+
 let usuarioEditando = null;
 let paginaActual = 1;
 const usuariosPorPagina = 10;
@@ -151,7 +127,7 @@ function renderizarUsuarios() {
             </td>
             <td>
                 <span style="color: #6b7280; font-size: 13px;">
-                    ${usuario.fechaRegistro.toLocaleDateString('es-ES')}
+                    ${usuario.fechaRegistro}
                 </span>
             </td>
             <td>
@@ -507,5 +483,11 @@ function toggleSidebar() {
 window.addEventListener('resize', function() {
     if (window.innerWidth > 768) {
         document.querySelector('.sidebar').classList.remove('open');
+    }
+});
+
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        window.location.reload(); // Fuerza recarga real al volver con "atrás"
     }
 });

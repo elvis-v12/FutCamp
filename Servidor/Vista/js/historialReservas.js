@@ -1,92 +1,23 @@
 // Variables globales
-let historialReservas = [
-    {
-        id: 1,
-        nombres: "Patrik Laura",
-        telefono: "958046785",
-        personas: 10,
-        dia: "Lunes",
-        horaEntrada: "10:00",
-        horaSalida: "12:00",
-        comentarios: "CANCHA DE FUTBOL",
-        codigoEstudiante: "7002708724",
-        estado: "confirmada",
-        fechaReserva: new Date('2024-01-15'),
-        fechaCreacion: new Date('2024-01-10')
-    },
-    {
-        id: 2,
-        nombres: "Daniel Infante Cornelio",
-        telefono: "958064756",
-        personas: 12,
-        dia: "Martes",
-        horaEntrada: "13:00",
-        horaSalida: "15:00",
-        comentarios: "CANCHA DE BASQUET",
-        codigoEstudiante: "7002734659",
-        estado: "confirmada",
-        fechaReserva: new Date('2024-01-16'),
-        fechaCreacion: new Date('2024-01-12')
-    },
-    {
-        id: 3,
-        nombres: "María González López",
-        telefono: "987654321",
-        personas: 8,
-        dia: "Miércoles",
-        horaEntrada: "16:00",
-        horaSalida: "18:00",
-        comentarios: "CANCHA DE TENIS",
-        codigoEstudiante: "7002708725",
-        estado: "completada",
-        fechaReserva: new Date('2024-01-10'),
-        fechaCreacion: new Date('2024-01-08')
-    },
-    {
-        id: 4,
-        nombres: "Carlos Rodríguez Martín",
-        telefono: "912345678",
-        personas: 15,
-        dia: "Jueves",
-        horaEntrada: "14:00",
-        horaSalida: "16:00",
-        comentarios: "CANCHA DE VOLEY",
-        codigoEstudiante: "7002708726",
-        estado: "completada",
-        fechaReserva: new Date('2024-01-12'),
-        fechaCreacion: new Date('2024-01-09')
-    },
-    {
-        id: 5,
-        nombres: "Ana Martínez Silva",
-        telefono: "965432187",
-        personas: 6,
-        dia: "Viernes",
-        horaEntrada: "09:00",
-        horaSalida: "11:00",
-        comentarios: "CANCHA DE FUTBOL",
-        codigoEstudiante: "7002708727",
-        estado: "cancelada",
-        fechaReserva: new Date('2024-01-18'),
-        fechaCreacion: new Date('2024-01-15')
-    },
-    {
-        id: 6,
-        nombres: "Luis Fernando Torres",
-        telefono: "923456789",
-        personas: 20,
-        dia: "Sábado",
-        horaEntrada: "08:00",
-        horaSalida: "12:00",
-        comentarios: "CANCHA DE FUTBOL - TORNEO",
-        codigoEstudiante: "7002708728",
-        estado: "completada",
-        fechaReserva: new Date('2024-01-20'),
-        fechaCreacion: new Date('2024-01-17')
-    }
-];
+let historialReservas = [];
+let historialFiltrado = [];
+fetch("../../Servidor/Controlador/historialReservas.php")
+    .then(response => response.json())
+    .then(data => {
+        historialReservas = data.map(reserva => ({
+            ...reserva
+        }));
 
-let historialFiltrado = [...historialReservas];
+        // Aquí puedes llamar a una función para renderizar las reservas en la interfaz
+        console.log(historialReservas); // solo como ejemplo
+        historialFiltrado = [...historialReservas];
+        renderizarHistorial();
+        actualizarContadores();
+    })
+    .catch(error => {
+        console.error("JS Error al obtener las reservas:", error);
+    });
+
 let paginaActual = 1;
 const reservasPorPagina = 10;
 
@@ -183,7 +114,7 @@ function renderizarHistorial() {
             </td>
             <td>
                 <span style="color: #6b7280; font-size: 13px;">
-                    ${reserva.fechaReserva.toLocaleDateString('es-ES')}
+                    ${reserva.fechaReserva}
                 </span>
             </td>
             <td>

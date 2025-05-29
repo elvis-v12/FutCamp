@@ -77,7 +77,7 @@ span {
 
 .input-box {
     position: relative;
-    margin: 8px 0px;
+    margin: 3px 0px;
     width: 100%;
 
 }
@@ -249,6 +249,22 @@ p {
     50.1%, 100%{
         opacity: 1;
         z-index: 5;
+    }
+}
+
+.btnScaled {
+    animation: scaleBtn 0.6s;
+}
+
+@keyframes scaleBtn {
+    0% {
+        width: 143.67px;
+    }
+    50% {
+        width: 250px;
+    }
+    100% {
+        width: 143.67px;
     }
 }
 
