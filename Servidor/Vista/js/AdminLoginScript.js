@@ -33,7 +33,7 @@ fetch('../Controlador/Admin_login.php', {
         e.preventDefault();
 
         const emailInput = loginForm.querySelector('input[type="text"]');
-        const passwordInput = loginForm.querySelector('input[type="password"]');
+        const passwordInput = loginForm.querySelector('#login-password');
 
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
@@ -83,18 +83,18 @@ document.addEventListener('DOMContentLoaded', function () {
             body: formData
         })
         .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Registro exitoso. Ahora puedes iniciar sesión.");
-                window.location.href = "../Vista/index.html";
-            } else {
-                alert(data.error || 'Error en el registro.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error del servidor. Inténtalo más tarde.');
-        });
+.then(data => {
+    if (data.success) {
+        window.location.href = data.redirect;
+    } else {
+        alert(data.error || 'Error en el registro.');
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+    alert('Error del servidor. Inténtalo más tarde.');
+});
+
     });
 });
 
