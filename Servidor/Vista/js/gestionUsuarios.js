@@ -491,3 +491,31 @@ window.addEventListener("pageshow", function (event) {
         window.location.reload(); // Fuerza recarga real al volver con "atrás"
     }
 });
+
+//Botoncito Hamburguesa
+function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('open');
+            
+            if (sidebar.classList.contains('open')) {
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevenir scroll
+            } else {
+                overlay.classList.remove('active');
+                document.body.style.overflow = ''; // Restaurar scroll
+            }
+        }
+        
+        // Cerrar sidebar al redimensionar a pantalla grande
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });

@@ -12,8 +12,13 @@
 
 <body>
     <div class="app-container">
+        <!-- Mobile Menu Toggle - Corregido -->
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <!-- Header -->
             <div class="sidebar-header">
                 <div class="admin-info">
@@ -63,6 +68,9 @@
                 </button>
             </div>
         </div>
+
+        <!-- Sidebar Overlay - Corregido -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
         <!-- Main Content -->
         <div class="main-content">

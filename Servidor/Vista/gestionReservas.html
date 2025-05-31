@@ -12,8 +12,13 @@
 
 <body>
     <div class="app-container">
+        <!-- Mobile Menu Toggle - Añadido -->
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <!-- Header -->
             <div class="sidebar-header">
                 <div class="admin-info">
@@ -48,6 +53,7 @@
                 <button class="nav-item active" onclick="window.location.href='./gestionReservas.html'">
                     <i class="fas fa-cogs"></i>
                     <span>Gestión de Reservas</span>
+                </button>
                 <button class="nav-item" onclick="window.location.href='./perfilAdministrador.html'">
                     <i class="fas fa-user-cog"></i>
                     <span>Mi Perfil</span>
@@ -62,6 +68,9 @@
                 </button>
             </div>
         </div>
+
+        <!-- Sidebar Overlay - Añadido -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
         <!-- Main Content -->
         <div class="main-content">
@@ -107,6 +116,10 @@
                             <button class="btn-filter" onclick="limpiarFiltros()">
                                 <i class="fas fa-filter"></i>
                                 Limpiar Filtros
+                            </button>
+                            <button class="btn-export" onclick="exportarReservas()">
+                                <i class="fas fa-download"></i>
+                                Exportar
                             </button>
                         </div>
                     </div>

@@ -10,8 +10,13 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- Mobile Menu Toggle - Añadido -->
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <!-- Header -->
             <div class="sidebar-header">
                 <div class="admin-info">
@@ -61,6 +66,9 @@
                 </button>
             </div>
         </div>
+
+        <!-- Sidebar Overlay - Añadido -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
         <!-- Main Content -->
         <div class="main-content">
@@ -219,5 +227,6 @@
 
     <script src="../Vista/js/gestionUsuarios.js"></script>
     <script src="../Vista/js/logout.js"></script>
+    
 </body>
 </html>

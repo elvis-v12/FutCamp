@@ -1,93 +1,93 @@
 // Variables globales
-let historialReservas = [];
-let historialFiltrado = [];
+let historialReservas = []
+let historialFiltrado = []
 fetch("../../Servidor/Controlador/historialReservas.php")
-    .then(response => response.json())
-    .then(data => {
-        historialReservas = data.map(reserva => ({
-            ...reserva
-        }));
+  .then((response) => response.json())
+  .then((data) => {
+    historialReservas = data.map((reserva) => ({
+      ...reserva,
+    }))
 
-        // Aquí puedes llamar a una función para renderizar las reservas en la interfaz
-        console.log(historialReservas); // solo como ejemplo
-        historialFiltrado = [...historialReservas];
-        renderizarHistorial();
-        actualizarContadores();
-    })
-    .catch(error => {
-        console.error("JS Error al obtener las reservas:", error);
-    });
+    // Aquí puedes llamar a una función para renderizar las reservas en la interfaz
+    console.log(historialReservas) // solo como ejemplo
+    historialFiltrado = [...historialReservas]
+    renderizarHistorial()
+    actualizarContadores()
+  })
+  .catch((error) => {
+    console.error("JS Error al obtener las reservas:", error)
+  })
 
-let paginaActual = 1;
-const reservasPorPagina = 10;
+let paginaActual = 1
+const reservasPorPagina = 10
 
 // Inicializar la aplicación
-document.addEventListener('DOMContentLoaded', function() {
-    setupEventListeners();
-    renderizarHistorial();
-    actualizarEstadisticas();
-    actualizarContadores();
-});
+document.addEventListener("DOMContentLoaded", () => {
+  setupEventListeners()
+  renderizarHistorial()
+  actualizarEstadisticas()
+  actualizarContadores()
+})
 
 // Configurar event listeners
 function setupEventListeners() {
-    // Event listeners para navegación
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-        item.addEventListener('click', function() {
-            navItems.forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
+  // Event listeners para navegación
+  const navItems = document.querySelectorAll(".nav-item")
+  navItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      navItems.forEach((nav) => nav.classList.remove("active"))
+      this.classList.add("active")
+    })
+  })
 
-    // Event listener para logout
-    const logoutBtn = document.querySelector('.logout-btn');
-    logoutBtn.addEventListener('click', function() {
-        if (confirm('¿Está seguro que desea cerrar sesión?')) {
-            mostrarNotificacion('Sesión cerrada exitosamente', 'info');
-        }
-    });
+  // Event listener para logout
+  const logoutBtn = document.querySelector(".logout-btn")
+  logoutBtn.addEventListener("click", () => {
+    if (confirm("¿Está seguro que desea cerrar sesión?")) {
+      mostrarNotificacion("Sesión cerrada exitosamente", "info")
+    }
+  })
 
-    // Event listener para cerrar modal con ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            cerrarModal();
-        }
-    });
+  // Event listener para cerrar modal con ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      cerrarModal()
+    }
+  })
 
-    // Event listener para cerrar modal al hacer click fuera
-    document.getElementById('details-modal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            cerrarModal();
-        }
-    });
+  // Event listener para cerrar modal al hacer click fuera
+  document.getElementById("details-modal").addEventListener("click", function (e) {
+    if (e.target === this) {
+      cerrarModal()
+    }
+  })
 }
 
 // Renderizar tabla de historial simplificada
 function renderizarHistorial() {
-    const tbody = document.getElementById('historial-tbody');
-    const inicio = (paginaActual - 1) * reservasPorPagina;
-    const fin = inicio + reservasPorPagina;
-    const reservasPagina = historialFiltrado.slice(inicio, fin);
+  const tbody = document.getElementById("historial-tbody")
+  const inicio = (paginaActual - 1) * reservasPorPagina
+  const fin = inicio + reservasPorPagina
+  const reservasPagina = historialFiltrado.slice(inicio, fin)
 
-    tbody.innerHTML = '';
+  tbody.innerHTML = ""
 
-    if (reservasPagina.length === 0) {
-        tbody.innerHTML = `
+  if (reservasPagina.length === 0) {
+    tbody.innerHTML = `
             <tr>
                 <td colspan="7" style="text-align: center; padding: 40px; color: #6b7280;">
                     <i class="fas fa-history" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
                     No se encontraron reservas en el historial
                 </td>
             </tr>
-        `;
-        return;
-    }
+        `
+    return
+  }
 
-    reservasPagina.forEach((reserva) => {
-        const fila = document.createElement('tr');
-        
-        fila.innerHTML = `
+  reservasPagina.forEach((reserva) => {
+    const fila = document.createElement("tr")
+
+    fila.innerHTML = `
             <td>
                 <div style="font-weight: 600; color: #1f2937;">${reserva.nombres}</div>
                 <div style="font-size: 12px; color: #6b7280;">ID: ${reserva.id}</div>
@@ -123,80 +123,80 @@ function renderizarHistorial() {
                     Detalles
                 </button>
             </td>
-        `;
-        tbody.appendChild(fila);
-    });
+        `
+    tbody.appendChild(fila)
+  })
 
-    actualizarPaginacion();
+  actualizarPaginacion()
 }
 
 // Filtrar historial
 function filtrarHistorial() {
-    const searchTerm = document.getElementById('search-input').value.toLowerCase();
-    const filterEstado = document.getElementById('filter-estado').value;
-    const filterMes = document.getElementById('filter-mes').value;
+  const searchTerm = document.getElementById("search-input").value.toLowerCase()
+  const filterEstado = document.getElementById("filter-estado").value
+  const filterMes = document.getElementById("filter-mes").value
 
-    historialFiltrado = historialReservas.filter(reserva => {
-        const matchesSearch = 
-            reserva.nombres.toLowerCase().includes(searchTerm) ||
-            reserva.telefono.includes(searchTerm) ||
-            reserva.codigoEstudiante.includes(searchTerm) ||
-            reserva.comentarios.toLowerCase().includes(searchTerm);
-        
-        const matchesEstado = !filterEstado || reserva.estado === filterEstado;
-        
-        const matchesMes = !filterMes || reserva.fechaReserva.getMonth().toString() === filterMes;
+  historialFiltrado = historialReservas.filter((reserva) => {
+    const matchesSearch =
+      reserva.nombres.toLowerCase().includes(searchTerm) ||
+      reserva.telefono.includes(searchTerm) ||
+      reserva.codigoEstudiante.includes(searchTerm) ||
+      reserva.comentarios.toLowerCase().includes(searchTerm)
 
-        return matchesSearch && matchesEstado && matchesMes;
-    });
+    const matchesEstado = !filterEstado || reserva.estado === filterEstado
 
-    paginaActual = 1;
-    renderizarHistorial();
-    actualizarContadores();
-    actualizarEstadisticas();
+    const matchesMes = !filterMes || reserva.fechaReserva.getMonth().toString() === filterMes
+
+    return matchesSearch && matchesEstado && matchesMes
+  })
+
+  paginaActual = 1
+  renderizarHistorial()
+  actualizarContadores()
+  actualizarEstadisticas()
 }
 
 // Limpiar filtros
 function limpiarFiltros() {
-    document.getElementById('search-input').value = '';
-    document.getElementById('filter-estado').value = '';
-    document.getElementById('filter-mes').value = '';
-    historialFiltrado = [...historialReservas];
-    paginaActual = 1;
-    renderizarHistorial();
-    actualizarContadores();
-    actualizarEstadisticas();
-    mostrarNotificacion('Filtros limpiados', 'info');
+  document.getElementById("search-input").value = ""
+  document.getElementById("filter-estado").value = ""
+  document.getElementById("filter-mes").value = ""
+  historialFiltrado = [...historialReservas]
+  paginaActual = 1
+  renderizarHistorial()
+  actualizarContadores()
+  actualizarEstadisticas()
+  mostrarNotificacion("Filtros limpiados", "info")
 }
 
 // Actualizar historial
 function actualizarHistorial() {
-    // Simular actualización de datos
-    mostrarNotificacion('Actualizando historial...', 'info');
-    
-    // Agregar efecto de rotación al icono
-    const btnRefresh = document.querySelector('.btn-refresh i');
-    btnRefresh.style.animation = 'spin 1s linear infinite';
-    
-    setTimeout(() => {
-        // Quitar animación
-        btnRefresh.style.animation = '';
-        
-        // Aquí iría la lógica para obtener datos actualizados del servidor
-        renderizarHistorial();
-        actualizarEstadisticas();
-        actualizarContadores();
-        mostrarNotificacion('Historial actualizado exitosamente', 'success');
-    }, 1500);
+  // Simular actualización de datos
+  mostrarNotificacion("Actualizando historial...", "info")
+
+  // Agregar efecto de rotación al icono
+  const btnRefresh = document.querySelector(".btn-refresh i")
+  btnRefresh.style.animation = "spin 1s linear infinite"
+
+  setTimeout(() => {
+    // Quitar animación
+    btnRefresh.style.animation = ""
+
+    // Aquí iría la lógica para obtener datos actualizados del servidor
+    renderizarHistorial()
+    actualizarEstadisticas()
+    actualizarContadores()
+    mostrarNotificacion("Historial actualizado exitosamente", "success")
+  }, 1500)
 }
 
 // Mostrar detalles de reserva
 function mostrarDetalles(id) {
-    const reserva = historialReservas.find(r => r.id === id);
-    if (!reserva) return;
+  const reserva = historialReservas.find((r) => r.id === id)
+  if (!reserva) return
 
-    const detailsContent = document.getElementById('details-content');
-    detailsContent.innerHTML = `
+  const detailsContent = document.getElementById("details-content")
+  detailsContent.innerHTML = `
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div>
                 <h4 style="color: #c40000; margin-bottom: 16px; font-size: 16px;">Información Personal</h4>
@@ -228,7 +228,7 @@ function mostrarDetalles(id) {
                     </span>
                 </div>
                 <div style="margin-bottom: 12px;">
-                    <strong>Fecha Reserva:</strong> ${reserva.fechaReserva.toLocaleDateString('es-ES')}
+                    <strong>Fecha Reserva:</strong> ${reserva.fechaReserva.toLocaleDateString("es-ES")}
                 </div>
             </div>
         </div>
@@ -240,109 +240,113 @@ function mostrarDetalles(id) {
         </div>
         <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
             <div style="font-size: 12px; color: #6b7280;">
-                <strong>Fecha de creación:</strong> ${reserva.fechaCreacion.toLocaleDateString('es-ES')} a las ${reserva.fechaCreacion.toLocaleTimeString('es-ES')}
+                <strong>Fecha de creación:</strong> ${reserva.fechaCreacion.toLocaleDateString("es-ES")} a las ${reserva.fechaCreacion.toLocaleTimeString("es-ES")}
             </div>
         </div>
-    `;
+    `
 
-    document.getElementById('details-modal').style.display = 'block';
-    document.body.style.overflow = 'hidden';
+  document.getElementById("details-modal").style.display = "block"
+  document.body.style.overflow = "hidden"
 }
 
 // Cerrar modal
 function cerrarModal() {
-    document.getElementById('details-modal').style.display = 'none';
-    document.body.style.overflow = 'auto';
+  document.getElementById("details-modal").style.display = "none"
+  document.body.style.overflow = "auto"
 }
 
 // Cambiar página
 function cambiarPagina(direccion) {
-    const totalPaginas = Math.ceil(historialFiltrado.length / reservasPorPagina);
-    
-    if (direccion === -1 && paginaActual > 1) {
-        paginaActual--;
-    } else if (direccion === 1 && paginaActual < totalPaginas) {
-        paginaActual++;
-    }
-    
-    renderizarHistorial();
+  const totalPaginas = Math.ceil(historialFiltrado.length / reservasPorPagina)
+
+  if (direccion === -1 && paginaActual > 1) {
+    paginaActual--
+  } else if (direccion === 1 && paginaActual < totalPaginas) {
+    paginaActual++
+  }
+
+  renderizarHistorial()
 }
 
 // Actualizar paginación
 function actualizarPaginacion() {
-    const totalPaginas = Math.ceil(historialFiltrado.length / reservasPorPagina);
-    const pageNumbers = document.querySelector('.page-numbers');
-    
-    pageNumbers.innerHTML = '';
-    
-    for (let i = 1; i <= totalPaginas; i++) {
-        const btn = document.createElement('button');
-        btn.className = `btn-page-number ${i === paginaActual ? 'active' : ''}`;
-        btn.textContent = i;
-        btn.onclick = () => {
-            paginaActual = i;
-            renderizarHistorial();
-        };
-        pageNumbers.appendChild(btn);
-    }
+  const totalPaginas = Math.ceil(historialFiltrado.length / reservasPorPagina)
+  const pageNumbers = document.querySelector(".page-numbers")
 
-    // Actualizar botones anterior/siguiente
-    const btnAnterior = document.querySelector('.btn-page');
-    const btnSiguiente = document.querySelectorAll('.btn-page')[1];
-    
-    if (btnAnterior) btnAnterior.disabled = paginaActual === 1;
-    if (btnSiguiente) btnSiguiente.disabled = paginaActual === totalPaginas;
+  pageNumbers.innerHTML = ""
+
+  for (let i = 1; i <= totalPaginas; i++) {
+    const btn = document.createElement("button")
+    btn.className = `btn-page-number ${i === paginaActual ? "active" : ""}`
+    btn.textContent = i
+    btn.onclick = () => {
+      paginaActual = i
+      renderizarHistorial()
+    }
+    pageNumbers.appendChild(btn)
+  }
+
+  // Actualizar botones anterior/siguiente
+  const btnAnterior = document.querySelector(".btn-page")
+  const btnSiguiente = document.querySelectorAll(".btn-page")[1]
+
+  if (btnAnterior) btnAnterior.disabled = paginaActual === 1
+  if (btnSiguiente) btnSiguiente.disabled = paginaActual === totalPaginas
 }
 
 // Actualizar contadores
 function actualizarContadores() {
-    const totalReservas = historialReservas.length;
-    const reservasMostradas = historialFiltrado.length;
+  const totalReservas = historialReservas.length
+  const reservasMostradas = historialFiltrado.length
 
-    document.getElementById('total-historial').textContent = `${totalReservas} Reservas en Historial`;
-    document.getElementById('total-count').textContent = totalReservas;
-    document.getElementById('showing-count').textContent = reservasMostradas;
+  document.getElementById("total-historial").textContent = `${totalReservas} Reservas en Historial`
+  document.getElementById("total-count").textContent = totalReservas
+  document.getElementById("showing-count").textContent = reservasMostradas
 }
 
 // Actualizar estadísticas
 function actualizarEstadisticas() {
-    const confirmadas = historialFiltrado.filter(r => r.estado === 'confirmada').length;
-    const completadas = historialFiltrado.filter(r => r.estado === 'completada').length;
-    const canceladas = historialFiltrado.filter(r => r.estado === 'cancelada').length;
-    const total = historialFiltrado.length;
+  const confirmadas = historialFiltrado.filter((r) => r.estado === "confirmada").length
+  const completadas = historialFiltrado.filter((r) => r.estado === "completada").length
+  const canceladas = historialFiltrado.filter((r) => r.estado === "cancelada").length
+  const total = historialFiltrado.length
 
-    document.getElementById('stat-confirmadas').textContent = confirmadas;
-    document.getElementById('stat-completadas').textContent = completadas;
-    document.getElementById('stat-canceladas').textContent = canceladas;
-    document.getElementById('stat-total').textContent = total;
+  document.getElementById("stat-confirmadas").textContent = confirmadas
+  document.getElementById("stat-completadas").textContent = completadas
+  document.getElementById("stat-canceladas").textContent = canceladas
+  document.getElementById("stat-total").textContent = total
 }
 
 // Exportar historial
 function exportarHistorial() {
-    const csvContent = "data:text/csv;charset=utf-8," 
-        + "ID,Nombres,Teléfono,Personas,Día,Hora Entrada,Hora Salida,Comentarios,Código Estudiante,Estado,Fecha Reserva,Fecha Creación\n"
-        + historialReservas.map(r => 
-            `${r.id},"${r.nombres}","${r.telefono}",${r.personas},"${r.dia}","${r.horaEntrada}","${r.horaSalida}","${r.comentarios}","${r.codigoEstudiante}","${r.estado}","${r.fechaReserva.toLocaleDateString('es-ES')}","${r.fechaCreacion.toLocaleDateString('es-ES')}"`
-        ).join("\n");
+  const csvContent =
+    "data:text/csv;charset=utf-8," +
+    "ID,Nombres,Teléfono,Personas,Día,Hora Entrada,Hora Salida,Comentarios,Código Estudiante,Estado,Fecha Reserva,Fecha Creación\n" +
+    historialReservas
+      .map(
+        (r) =>
+          `${r.id},"${r.nombres}","${r.telefono}",${r.personas},"${r.dia}","${r.horaEntrada}","${r.horaSalida}","${r.comentarios}","${r.codigoEstudiante}","${r.estado}","${r.fechaReserva.toLocaleDateString("es-ES")}","${r.fechaCreacion.toLocaleDateString("es-ES")}"`,
+      )
+      .join("\n")
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "historial_reservas.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    mostrarNotificacion('Historial exportado exitosamente', 'success');
+  const encodedUri = encodeURI(csvContent)
+  const link = document.createElement("a")
+  link.setAttribute("href", encodedUri)
+  link.setAttribute("download", "historial_reservas.csv")
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+
+  mostrarNotificacion("Historial exportado exitosamente", "success")
 }
 
 // Función para mostrar notificaciones
-function mostrarNotificacion(mensaje, tipo = 'info') {
-    const notificacion = document.createElement('div');
-    notificacion.className = `notificacion ${tipo}`;
-    notificacion.textContent = mensaje;
+function mostrarNotificacion(mensaje, tipo = "info") {
+  const notificacion = document.createElement("div")
+  notificacion.className = `notificacion ${tipo}`
+  notificacion.textContent = mensaje
 
-    notificacion.style.cssText = `
+  notificacion.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
@@ -353,36 +357,36 @@ function mostrarNotificacion(mensaje, tipo = 'info') {
         z-index: 1001;
         animation: slideInRight 0.3s ease-out;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    `;
+    `
 
-    switch(tipo) {
-        case 'success':
-            notificacion.style.background = '#059669';
-            break;
-        case 'error':
-            notificacion.style.background = '#dc2626';
-            break;
-        case 'info':
-            notificacion.style.background = '#2563eb';
-            break;
-        default:
-            notificacion.style.background = '#6b7280';
-    }
+  switch (tipo) {
+    case "success":
+      notificacion.style.background = "#059669"
+      break
+    case "error":
+      notificacion.style.background = "#dc2626"
+      break
+    case "info":
+      notificacion.style.background = "#2563eb"
+      break
+    default:
+      notificacion.style.background = "#6b7280"
+  }
 
-    document.body.appendChild(notificacion);
+  document.body.appendChild(notificacion)
 
+  setTimeout(() => {
+    notificacion.style.animation = "slideOutRight 0.3s ease-out"
     setTimeout(() => {
-        notificacion.style.animation = 'slideOutRight 0.3s ease-out';
-        setTimeout(() => {
-            if (document.body.contains(notificacion)) {
-                document.body.removeChild(notificacion);
-            }
-        }, 300);
-    }, 3000);
+      if (document.body.contains(notificacion)) {
+        document.body.removeChild(notificacion)
+      }
+    }, 300)
+  }, 3000)
 }
 
 // Agregar estilos de animación
-const style = document.createElement('style');
+const style = document.createElement("style")
 style.textContent = `
     @keyframes slideInRight {
         from {
@@ -414,18 +418,39 @@ style.textContent = `
             transform: rotate(360deg);
         }
     }
-`;
-document.head.appendChild(style);
+`
+document.head.appendChild(style)
 
-// Función para manejar responsive
+// Función para manejar responsive - MEJORADA
 function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('open');
+  const sidebar = document.getElementById("sidebar")
+  const overlay = document.getElementById("sidebar-overlay")
+
+  sidebar.classList.toggle("open")
+
+  if (sidebar.classList.contains("open")) {
+    overlay.classList.add("active")
+    document.body.style.overflow = "hidden" // Prevenir scroll
+  } else {
+    overlay.classList.remove("active")
+    document.body.style.overflow = "" // Restaurar scroll
+  }
 }
 
-// Event listener para redimensionar ventana
-window.addEventListener('resize', function() {
-    if (window.innerWidth > 768) {
-        document.querySelector('.sidebar').classList.remove('open');
-    }
-});
+// Event listener para redimensionar ventana - MEJORADO
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 768) {
+    const sidebar = document.getElementById("sidebar")
+    const overlay = document.getElementById("sidebar-overlay")
+
+    sidebar.classList.remove("open")
+    overlay.classList.remove("active")
+    document.body.style.overflow = ""
+  }
+})
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+    window.location.reload() // Fuerza recarga real al volver con "atrás"
+  }
+})

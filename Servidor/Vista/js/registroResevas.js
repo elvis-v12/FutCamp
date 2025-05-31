@@ -1,3 +1,52 @@
+// Función para manejar responsive - MOVIDA AL INICIO
+function toggleSidebar() {
+  console.log("toggleSidebar llamada") // Debug
+
+  const sidebar = document.getElementById("sidebar")
+  const overlay = document.getElementById("sidebar-overlay")
+
+  console.log("Sidebar:", sidebar) // Debug
+  console.log("Overlay:", overlay) // Debug
+
+  if (!sidebar || !overlay) {
+    console.error("No se encontraron los elementos sidebar u overlay")
+    return
+  }
+
+  sidebar.classList.toggle("open")
+  console.log("Sidebar classes:", sidebar.classList.toString()) // Debug
+
+  if (sidebar.classList.contains("open")) {
+    overlay.classList.add("active")
+    document.body.style.overflow = "hidden"
+    console.log("Sidebar abierto") // Debug
+  } else {
+    overlay.classList.remove("active")
+    document.body.style.overflow = ""
+    console.log("Sidebar cerrado") // Debug
+  }
+}
+
+// Event listener para redimensionar ventana
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 768) {
+    const sidebar = document.getElementById("sidebar")
+    const overlay = document.getElementById("sidebar-overlay")
+
+    if (sidebar && overlay) {
+      sidebar.classList.remove("open")
+      overlay.classList.remove("active")
+      document.body.style.overflow = ""
+    }
+  }
+})
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+    window.location.reload()
+  }
+})
+
 // Datos simulados de reservas existentes (base de datos)
 const reservasExistentes = {
   "lunes-10:00": true,
@@ -79,16 +128,43 @@ function initializeScheduleTable() {
 
 // Función para actualizar horarios desde la base de datos
 function actualizarHorariosDesdeDB() {
-  // Simular llamada a la base de datos
   console.log("Actualizando horarios desde la base de datos...")
-
-  // Aquí iría la lógica real para obtener datos del servidor
-  // Por ahora simulamos con datos estáticos
-
-  // Regenerar la tabla con los datos actualizados
   initializeScheduleTable()
-
   mostrarNotificacion("Horarios actualizados desde la base de datos", "info")
+}
+
+// Funciones del formulario
+function reservar() {
+  const codigo = document.getElementById("codigo").value
+  const nombre = document.getElementById("nombre").value
+  const telefono = document.getElementById("telefono").value
+  const personas = document.getElementById("personas").value
+  const dia = document.getElementById("dia").value
+  const horaEntrada = document.getElementById("hora-entrada").value
+  const horaSalida = document.getElementById("hora-salida").value
+  const comentarios = document.getElementById("comentarios").value
+
+  if (!codigo || !nombre || !telefono || !personas || !dia || !horaEntrada || !horaSalida) {
+    mostrarNotificacion("Por favor complete todos los campos obligatorios", "error")
+    return
+  }
+
+  // Simular reserva
+  mostrarNotificacion("Reserva creada exitosamente", "success")
+  limpiarCampos()
+}
+
+function limpiarCampos() {
+  document.getElementById("codigo").value = ""
+  document.getElementById("nombre").value = ""
+  document.getElementById("telefono").value = ""
+  document.getElementById("personas").value = ""
+  document.getElementById("dia").value = ""
+  document.getElementById("hora-entrada").value = ""
+  document.getElementById("hora-salida").value = ""
+  document.getElementById("comentarios").value = ""
+
+  mostrarNotificacion("Campos limpiados", "info")
 }
 
 // Agregar estilos adicionales para los estados disponible/ocupado
@@ -128,3 +204,109 @@ additionalStyles.textContent = `
     }
 `
 document.head.appendChild(additionalStyles)
+
+// Función para mostrar notificaciones
+function mostrarNotificacion(mensaje, tipo = "info") {
+  const notificacion = document.createElement("div")
+  notificacion.className = `notificacion ${tipo}`
+  notificacion.textContent = mensaje
+
+  notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 24px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 1001;
+        animation: slideInRight 0.3s ease-out;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    `
+
+  switch (tipo) {
+    case "success":
+      notificacion.style.background = "#059669"
+      break
+    case "error":
+      notificacion.style.background = "#dc2626"
+      break
+    case "info":
+      notificacion.style.background = "#2563eb"
+      break
+    default:
+      notificacion.style.background = "#6b7280"
+  }
+
+  document.body.appendChild(notificacion)
+
+  setTimeout(() => {
+    notificacion.style.animation = "slideOutRight 0.3s ease-out"
+    setTimeout(() => {
+      if (document.body.contains(notificacion)) {
+        document.body.removeChild(notificacion)
+      }
+    }, 300)
+  }, 3000)
+}
+
+// Agregar estilos de animación para notificaciones
+const notificationStyles = document.createElement("style")
+notificationStyles.textContent = `
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+`
+document.head.appendChild(notificationStyles)
+
+// Inicializar cuando el DOM esté listo - CORREGIDO
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM cargado") // Debug
+
+  // Inicializar tabla
+  initializeScheduleTable()
+
+  // Configurar botón hamburguesa
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn")
+  const overlay = document.getElementById("sidebar-overlay")
+
+  console.log("Mobile menu btn:", mobileMenuBtn) // Debug
+  console.log("Overlay:", overlay) // Debug
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener("click", (e) => {
+      e.preventDefault()
+      console.log("Botón hamburguesa clickeado") // Debug
+      toggleSidebar()
+    })
+  } else {
+    console.error("No se encontró el botón de menú móvil")
+  }
+
+  if (overlay) {
+    overlay.addEventListener("click", (e) => {
+      console.log("Overlay clickeado") // Debug
+      toggleSidebar()
+    })
+  } else {
+    console.error("No se encontró el overlay")
+  }
+})

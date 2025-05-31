@@ -10,8 +10,13 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- Mobile Menu Toggle - Añadido -->
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <!-- Header -->
             <div class="sidebar-header">
                 <div class="admin-info">
@@ -62,6 +67,9 @@
             </div>
         </div>
 
+        <!-- Sidebar Overlay - Añadido -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
         <!-- Main Content -->
         <div class="main-content">
             <!-- Header -->
@@ -94,7 +102,7 @@
                                     <i class="fas fa-user-shield"></i>
                                 </div>
                                 <button class="change-avatar-btn" >
-                                <img id="preview-img" src="" alt="Avatar" class="avatar-img">     
+                                <img id="preview-img" src="/placeholder.svg" alt="Avatar" class="avatar-img">     
                              </button>
                             </div>
                             <div class="profile-info">
