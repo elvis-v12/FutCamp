@@ -1,0 +1,14 @@
+Merge branch 'main' of https://github.com/elvis-v12/FutCamp
+#
+
+# If this is not correct, please run
+#
+:wq# On branch main
+# Your branch and 'origin/main' have diverged,
+# and have 1 and 1 different commits each, respectively.
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   Servidor/Vista/css/perfilAdministrador.css
+#
