@@ -515,7 +515,6 @@ window.addEventListener("pageshow", function (event) {
     if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         window.location.reload(); // Fuerza recarga real al volver con "atrás"
     }
-<<<<<<< HEAD
 });
 
 //Botoncito Hamburguesa
@@ -545,6 +544,3 @@ function toggleSidebar() {
                 document.body.style.overflow = '';
             }
         });
-=======
-});
->>>>>>> 3f53e47 (update:registro de estudinates)
