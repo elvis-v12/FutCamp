@@ -11,7 +11,7 @@ if (!isset($_SESSION['id_usuario'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // CONSULTA PARA LISTAR TODOS LOS ESTUDIANTES
     try {
-        $stmt = $db->query("SELECT id_estudiante AS id, cod_estudiante AS codigo, usuario, nombres, telefono, email, estado, fecha_registro FROM estudiantes");
+        $stmt = $db->query("SELECT id_estudiante AS id, cod_estudiante AS codigo, usuario, nombres, telefono, email, estado, fecha_registro AS fechaRegistro FROM estudiantes");
         $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($usuarios);
     } catch (PDOException $e) {

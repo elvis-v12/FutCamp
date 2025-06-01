@@ -13,7 +13,7 @@ try {
     $hora_entrada = $data['hora_entrada'];
     $hora_salida = $data['hora_salida'];
     $comentarios = $data['comentarios'];
-    $fecha = date("Y-m-d", strtotime("next " . $dia));
+    $fecha = date("Y-m-d"); // REGISTRA LA FECHA ACTUAL DEL SISTEMA
     $id_usuario = $_SESSION['id_usuario'] ?? 1;
 
     // Validar que la hora de entrada sea menor a la salida

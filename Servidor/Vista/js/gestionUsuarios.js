@@ -13,7 +13,12 @@ fetch("../../Servidor/Controlador/gestionUsuarios.php")
             return;
         }
 
-        usuarios = data.map(usuario => ({ ...usuario }));
+        usuarios = data.map(usuario => ({
+    ...usuario,
+    estado: parseInt(usuario.estado),
+    fechaRegistro: new Date(usuario.fechaRegistro).toLocaleDateString("es-ES")
+}));
+
         usuariosFiltrados = [...usuarios];
         renderizarUsuarios();
         actualizarContadores();
@@ -544,3 +549,7 @@ function toggleSidebar() {
                 document.body.style.overflow = '';
             }
         });
+        // Exponer funciones globales para los botones onclick en el HTML
+window.editarUsuario = editarUsuario;
+window.eliminarUsuario = eliminarUsuario;
+window.toggleUsuario = toggleUsuario;
