@@ -191,7 +191,7 @@ function limpiarFiltros() {
 // Agregar nuevo usuario
 function agregarUsuario() {
     usuarioEditando = null;
-    document.getElementById('modal-title').textContent = 'Agregar Usuario';
+   document.getElementById('modal-title').textContent = 'Agregar Estudiante';
     
     // Limpiar formulario
     document.getElementById('user-form').reset();
@@ -215,7 +215,6 @@ function editarUsuario(id) {
     document.getElementById('user-nombres').value = usuarioEditando.nombres;
     document.getElementById('user-telefono').value = usuarioEditando.telefono;
     document.getElementById('user-email').value = usuarioEditando.email;
-    document.getElementById('user-password').value = usuarioEditando.password;
     document.getElementById('user-estado').value = usuarioEditando.estado;
 
     // Mostrar modal
@@ -231,13 +230,13 @@ function guardarUsuario() {
     const nombres = document.getElementById('user-nombres').value.trim();
     const telefono = document.getElementById('user-telefono').value.trim();
     const email = document.getElementById('user-email').value.trim();
-    const password = document.getElementById('user-password').value.trim();
     const estado = parseInt(document.getElementById('user-estado').value);
 
-    if (!codigo || !usuario || !nombres || !telefono || !email || !password) {
+    if (!codigo || !usuario || !nombres || !telefono || !email) {
         mostrarNotificacion('Por favor complete todos los campos obligatorios', 'error');
         return;
     }
+
 
     // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -254,7 +253,6 @@ function guardarUsuario() {
         mostrarNotificacion('El código de usuario ya existe', 'error');
         return;
     }
-
     if (usuarioExiste) {
         mostrarNotificacion('El nombre de usuario ya existe', 'error');
         return;
@@ -271,32 +269,52 @@ function guardarUsuario() {
                 nombres,
                 telefono,
                 email,
-                password,
                 estado
             };
             mostrarNotificacion('Usuario actualizado exitosamente', 'success');
         }
-    } else {
-        // Crear nuevo usuario
-        const nuevoId = Math.max(...usuarios.map(u => u.id)) + 1;
-        const nuevoUsuario = {
-            id: nuevoId,
+   } else {
+    // Crear nuevo usuario
+    fetch("../../Servidor/Controlador/gestionUsuarios.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
             codigo,
             usuario,
             nombres,
             telefono,
             email,
-            password,
-            estado,
-            fechaRegistro: new Date()
-        };
-        usuarios.push(nuevoUsuario);
-        mostrarNotificacion('Usuario creado exitosamente', 'success');
-    }
+            estado
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            usuarios.push({
+                id: parseInt(data.id),
+                codigo,
+                usuario,
+                nombres,
+                telefono,
+                email,
+                estado,
+                fechaRegistro: new Date().toLocaleDateString('es-ES')
+            });
+            mostrarNotificacion('Usuario guardado correctamente', 'success');
+            filtrarUsuarios();
+            cerrarModal();
+        } else {
+            mostrarNotificacion('Error: ' + data.error, 'error');
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        mostrarNotificacion('Error de red o servidor', 'error');
+    });
+}
 
-    // Actualizar vista
-    filtrarUsuarios();
-    cerrarModal();
 }
 
 // Toggle estado del usuario
@@ -384,22 +402,29 @@ function actualizarContadores() {
 
 // Exportar usuarios
 function exportarUsuarios() {
-    const csvContent = "data:text/csv;charset=utf-8," 
-        + "ID,Código,Usuario,Nombres,Teléfono,Email,Estado,Fecha Registro\n"
-        + usuarios.map(u => 
-            `${u.id},"${u.codigo}","${u.usuario}","${u.nombres}","${u.telefono}","${u.email}","${u.estado === 1 ? 'Activo' : 'Inactivo'}","${u.fechaRegistro.toLocaleDateString('es-ES')}"`
-        ).join("\n");
+    // Convertir a formato para SheetJS
+    const data = usuarios.map(u => ({
+        ID: u.id,
+        Código: u.codigo,
+        Usuario: u.usuario,
+        Nombres: u.nombres,
+        Teléfono: u.telefono,
+        Email: u.email,
+        Estado: u.estado === 1 ? "Activo" : "Inactivo",
+        "Fecha Registro": new Date(u.fechaRegistro).toLocaleDateString("es-PE")
+    }));
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "usuarios.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    mostrarNotificacion('Archivo CSV descargado exitosamente', 'success');
+    // Crear hoja de Excel
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Estudiantes");
+
+    // Exportar como archivo .xlsx
+    XLSX.writeFile(workbook, "estudiantes.xlsx");
+
+    mostrarNotificacion('Archivo Excel generado exitosamente', 'success');
 }
+
 
 // Función para mostrar notificaciones
 function mostrarNotificacion(mensaje, tipo = 'info') {
@@ -490,6 +515,7 @@ window.addEventListener("pageshow", function (event) {
     if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         window.location.reload(); // Fuerza recarga real al volver con "atrás"
     }
+<<<<<<< HEAD
 });
 
 //Botoncito Hamburguesa
@@ -519,3 +545,6 @@ function toggleSidebar() {
                 document.body.style.overflow = '';
             }
         });
+=======
+});
+>>>>>>> 3f53e47 (update:registro de estudinates)

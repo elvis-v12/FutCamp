@@ -8,30 +8,40 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-if (isset($_SESSION['id_usuario'])) {
-    header("Location: ../Vista/gestionEstudiantes.html");
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // CONSULTA PARA LISTAR TODOS LOS ESTUDIANTES
+    try {
+        $stmt = $db->query("SELECT id_estudiante AS id, cod_estudiante AS codigo, usuario, nombres, telefono, email, estado, fecha_registro FROM estudiantes");
+        $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($usuarios);
+    } catch (PDOException $e) {
+        echo json_encode(["error" => $e->getMessage()]);
+    }
     exit;
 }
 
-try {
-    $stmt = $db->prepare("
-        SELECT 
-            u.id_usuario AS id, 
-            CONCAT(u.nombres, ' ', u.apellidos) AS nombres, 
-            u.correo AS email,
-            u.usuario, 
-            u.estado,
-            e.cod_estudiante AS codigo,
-            r.telefono,
-            r.dia_reserva AS fechaRegistro
-        FROM usuarios u
-        JOIN estudiantes e ON u.usuario = e.usuario
-        JOIN reserva r ON r.id_estudiante = e.id_estudiante
-    ");
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // REGISTRO NUEVO ESTUDIANTE
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    $stmt->execute();
-    $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($usuarios, JSON_UNESCAPED_UNICODE);
-} catch (PDOException $e) {
-    echo json_encode(["error" => $e->getMessage()]);
+    if (!$data) {
+        echo json_encode(["error" => "Datos inválidos."]);
+        exit;
+    }
+
+    try {
+        $stmt = $db->prepare("INSERT INTO estudiantes (cod_estudiante, usuario, nombres, telefono, email, estado, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->execute([
+            $data['codigo'],
+            $data['usuario'],
+            $data['nombres'],
+            $data['telefono'],
+            $data['email'],
+            $data['estado']
+        ]);
+
+        echo json_encode(["success" => true, "id" => $db->lastInsertId()]);
+    } catch (PDOException $e) {
+        echo json_encode(["error" => $e->getMessage()]);
+    }
 }

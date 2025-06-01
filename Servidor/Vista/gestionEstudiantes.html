@@ -170,61 +170,57 @@
         </div>
     </div>
 
-    <!-- Modal de Agregar/Editar Usuario -->
-    <div id="user-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">Agregar Estudiante</h3>
-                <button class="close-btn" onclick="cerrarModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="user-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="user-codigo">Código de Estudiante *</label>
-                            <input type="text" id="user-codigo" required maxlength="10">
-                        </div>
-                        <div class="form-group">
-                            <label for="user-usuario">Nombre de Estudiante *</label>
-                            <input type="text" id="user-usuario" required maxlength="20">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="user-nombres">Nombres Completos *</label>
-                            <input type="text" id="user-nombres" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="user-telefono">Teléfono *</label>
-                            <input type="tel" id="user-telefono" required>
-                        </div>
+<!-- Modal de Agregar/Editar Usuario -->
+<div id="user-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-title">Agregar Estudiante</h3>
+            <button class="close-btn" onclick="cerrarModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="user-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="user-codigo">Código de Estudiante *</label>
+                        <input type="text" id="user-codigo" required maxlength="10">
                     </div>
                     <div class="form-group">
-                        <label for="user-email">Email *</label>
-                        <input type="email" id="user-email" required>
+                        <label for="user-usuario">Usuario Institucional *</label>
+                        <input type="text" id="user-usuario" required maxlength="50">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="user-password">Contraseña *</label>
-                            <input type="password" id="user-password" required minlength="6">
-                        </div>
-                        <div class="form-group">
-                            <label for="user-estado">Estado</label>
-                            <select id="user-estado" required>
-                                <option value="1">Activo</option>
-                                <option value="0">Inactivo</option>
-                            </select>
-                        </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="user-nombres">Nombres Completos *</label>
+                        <input type="text" id="user-nombres" required>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                <button class="btn-primary" onclick="guardarUsuario()">Guardar Estudiante</button>
-            </div>
+                    <div class="form-group">
+                        <label for="user-telefono">Teléfono *</label>
+                        <input type="tel" id="user-telefono" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Email *</label>
+                    <input type="email" id="user-email" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="user-estado">Estado</label>
+                        <select id="user-estado" required>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+            <button class="btn-primary" onclick="guardarUsuario()">Guardar Estudiante</button>
         </div>
     </div>
-
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="../Vista/js/gestionUsuarios.js"></script>
     <script src="../Vista/js/logout.js"></script>
     
