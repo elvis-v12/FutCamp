@@ -13,17 +13,23 @@ session_start();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <div class="wrapper">
-        <form action="#" method="POST">
-            <h1>Recupera tu contraseña</h1>
-            <div class="input-box">
-                <input type="text" id="email" name="email" placeholder="Ingresar Correo Electrónico" required>
-            </div>
-            <button type="submit" class="btn" name="recuperar">RECUPERAR</button>
-            <div class="register-link">
-              <p>Volver a <a href="../Vista/index.html">Iniciar sesión</a></p>
-            </div>
-        </form>
+    <div class="container" id="container">
+        <div class="form-container">
+            <form action="#">
+                <div class="logo">
+                    <img src="../Vista/img/ucvitoFut.ico">
+                    <h1>Recuperar Contraseña</h1>
+                </div>
+                <div class="input-box">
+                    <input type="email" id="email" name="email" placeholder="Ingresar correo electrónico" required>
+                    <label></label>
+                </div>
+                <button type="submit" class="btn" name="recuperar">RECUPERAR</button>
+                <div class="register-link">
+                    <p>Volver a <a href="../Vista/index.html">Iniciar sesión</a></p>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

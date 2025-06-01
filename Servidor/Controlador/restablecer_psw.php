@@ -19,7 +19,10 @@ include "../Modelo/database.php";
     <div class="wrapper">
           <!-- Restablecer contraseña -->
           <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-            <h1>Restablece tu contraseña</h1>
+            <div class="logo">
+                <img src="../Vista/img/ucvitoFut.ico">
+                <h1>Recuperar Contraseña</h1>
+            </div>
             <div class="input-box">
               <input type="password" id="password" name="password" placeholder="Contraseña" required>
             </div>

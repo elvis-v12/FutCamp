@@ -17,7 +17,10 @@ session_start();
     <div class="wrapper">
         <!-- Formulario de Verificación de cuenta -->
         <form action="#" method="POST">
-            <h1>Verificación de cuenta</h1>
+            <div class="logo">
+                <img src="../Vista/img/ucvitoFut.ico">
+                <h1>Verificación de cuenta</h1>
+            </div>
             <div class="input-box">
                 <input type="text" id="otp" name="otp_code" placeholder="Ingresar Código OTP" required>
             </div>

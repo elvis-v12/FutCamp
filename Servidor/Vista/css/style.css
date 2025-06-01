@@ -32,14 +32,6 @@ body {
   text-align: center;
 }
 
-/* Estilo para el ícono/logo en verificación */
-.wrapper form::before {
-  content: url("../img/ucvitoFut.ico");
-  font-size: 60px;
-  margin-bottom: 20px;
-  display: block;
-}
-
 .video-container {
   text-align: center;
   margin-bottom: 20px;
@@ -57,8 +49,8 @@ body {
 }
 
 .wrapper h1 {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 38px;
+  font-weight: bold;
   text-align: center;
   color: #c40000;
   margin-bottom: 30px;
@@ -126,7 +118,8 @@ body {
   box-shadow: 0 0 0 2px rgba(196, 0, 0, 0.2);
 }
 
-option, optgroup{
+option,
+optgroup {
   color: #333;
   font-size: 14px;
 }
@@ -205,19 +198,20 @@ option, optgroup{
   color: #a30000;
 }
 
-.logo{
+.logo {
   display: flex;
-  gap: 3px;
+  gap: 10px;
   align-items: center;
   justify-content: center;
+  margin-bottom: 25px;
 }
 
-.logo img{
+.logo img {
   width: 100px;
   height: 100px;
 }
 
-.wrapper img{
+.wrapper img {
   background: none;
   border: none;
   box-shadow: none;
@@ -244,11 +238,10 @@ option, optgroup{
 }
 
 .help-icon {
-    display: block;
-    cursor: pointer;
+  display: block;
+  cursor: pointer;
 }
 
-/* Estilos para la pantalla de carga */
 #loadingScreen {
   display: none;
   position: fixed;
@@ -261,6 +254,7 @@ option, optgroup{
   justify-content: center;
   align-items: center;
 }
+
 .spinner-border {
   width: 3rem;
   height: 3rem;
@@ -270,13 +264,13 @@ option, optgroup{
   .wrapper {
     padding: 30px 20px;
   }
-  
+
   .wrapper .remember-forgot {
     text-align: center;
     font-size: 13.5px;
     margin-top: 1px;
   }
-  
+
   .wrapper .input-box {
     margin-bottom: 10px;
   }
@@ -293,5 +287,20 @@ option, optgroup{
   .wrapper .input-box select optgroup {
     font-size: 12px;
     white-space: normal;
+  }
+
+  .logo {
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .logo img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .logo h1 {
+    font-size: 28px;
   }
 }
