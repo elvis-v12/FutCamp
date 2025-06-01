@@ -13,6 +13,11 @@ function reservar() {
         return;
     }
 
+    if (hora_entrada >= hora_salida) {
+        alert("La hora de entrada debe ser menor que la hora de salida.");
+        return;
+    }
+
     fetch("../Controlador/Registro_reserva.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,6 +31,7 @@ function reservar() {
         if (data.success) {
             alert(data.message);
             limpiarCampos();
+            cargarHorarios(); // Refresca la tabla
         } else {
             alert("Error: " + data.error);
         }
@@ -46,7 +52,7 @@ function limpiarCampos() {
     document.getElementById("comentarios").value = "";
 }
 
-  function cargarHorarios() {
+function cargarHorarios() {
     const dias = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
     const horas = [
         "08:00", "09:00", "10:00", "11:00", "12:00",
@@ -69,37 +75,68 @@ function limpiarCampos() {
             celda.setAttribute("data-hora", h);
             celda.textContent = "Disponible";
             celda.style.textAlign = "center";
+
+            // ✅ Pintar fondo verde por defecto (Disponible)
+            celda.style.backgroundColor = "#d4edda";
+            celda.style.color = "#155724";
+            celda.style.fontWeight = "bold";
+
             fila.appendChild(celda);
         }
         tabla.appendChild(fila);
     }
 
-    // Pintar horarios reservados
+    // Marcar los horarios ocupados
     fetch("../Controlador/obtenerHorarios.php")
         .then(res => res.json())
         .then(data => {
             data.forEach(reserva => {
-                const { dia, entrada } = reserva;
+                const { dia, entrada, salida } = reserva;
                 const diaLower = dia.toLowerCase();
-                const celda = document.querySelector(`td[data-dia="${diaLower}"][data-hora="${entrada}"]`);
-                if (celda) {
-                    celda.textContent = "Reservado";
-                    celda.style.backgroundColor = "#f8d7da";
-                    celda.style.color = "#721c24";
-                    celda.style.fontWeight = "bold";
+
+                let start = horas.indexOf(entrada);
+                let end = horas.indexOf(salida);
+
+                if (start !== -1 && end !== -1) {
+                    for (let i = start; i < end; i++) {
+                        const celda = document.querySelector(`td[data-dia="${diaLower}"][data-hora="${horas[i]}"]`);
+                        if (celda) {
+                            celda.textContent = "Reservado";
+                            celda.style.backgroundColor = "#f8d7da"; // rojo
+                            celda.style.color = "#721c24";
+                            celda.style.fontWeight = "bold";
+                        }
+                    }
                 }
             });
         });
 }
+
+
 window.onload = () => {
     cargarHorarios();
-    // ... ya estaba esto:
-   fetch("../Controlador/obtenerUsuario.php")
+    fetch("../Controlador/obtenerUsuario.php")
         .then(res => res.json())
         .then(data => {
-    if (data.nombres) {
-        document.getElementById("nombre-usuario").textContent = data.nombres.split(' ')[0];
-    }
-});
+            if (data.nombres) {
+                document.getElementById("nombre-usuario").textContent = data.nombres.split(' ')[0];
+            }
+        });
+};
 
-}
+document.querySelector(".search-btn").addEventListener("click", () => {
+    const codigo = document.getElementById("codigo").value.trim();
+    if (!codigo) return;
+
+    fetch(`../../Servidor/Controlador/obtenerEstudiante.php?codigo=${codigo}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+
+            document.getElementById("nombre").value = data.nombres;
+            document.getElementById("telefono").value = data.telefono;
+        });
+});

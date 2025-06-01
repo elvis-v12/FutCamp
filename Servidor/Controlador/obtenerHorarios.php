@@ -4,11 +4,11 @@ require_once("../Modelo/database.php");
 
 $stmt = $db->query("
     SELECT 
-        DAYNAME(dia_reserva) AS dia,
-        TIME_FORMAT(hora_entrada, '%H:%i') AS entrada,
-        TIME_FORMAT(hora_salida, '%H:%i') AS salida
-    FROM reserva
-    WHERE estado = 'Activa'
+        LOWER(dia) AS dia,
+        DATE_FORMAT(hora_inicio, '%H:%i') AS entrada,
+        DATE_FORMAT(hora_fin, '%H:%i') AS salida
+    FROM horarios
+    WHERE estado = 0
 ");
 
 $horarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
