@@ -3,27 +3,36 @@ function reservar() {
     const nombre = document.getElementById("nombre").value;
     const telefono = document.getElementById("telefono").value;
     const personas = document.getElementById("personas").value;
-    const dia = document.getElementById("dia").value;
-    const hora_entrada = document.getElementById("hora-entrada").value;
-    const hora_salida = document.getElementById("hora-salida").value;
+    const fechaReserva = document.getElementById("fecha-reserva").value;
+    const horaEntrada = document.getElementById("hora-entrada").value;
+    const horaSalida = document.getElementById("hora-salida").value;
     const comentarios = document.getElementById("comentarios").value;
 
-    if (!codigo || !telefono || !personas || !dia || !hora_entrada || !hora_salida) {
+    if (!codigo || !telefono || !personas || !fechaReserva || !horaEntrada || !horaSalida) {
         alert("Por favor completa todos los campos requeridos.");
         return;
     }
 
-    if (hora_entrada >= hora_salida) {
+    if (horaEntrada >= horaSalida) {
         alert("La hora de entrada debe ser menor que la hora de salida.");
         return;
     }
+
+    const dia = new Date(fechaReserva).toLocaleDateString("es-ES", { weekday: 'long' }).toLowerCase();
 
     fetch("../Controlador/Registro_reserva.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            codigo, telefono, personas, dia,
-            hora_entrada, hora_salida, comentarios
+            codigo,
+            telefono,
+            personas,
+            fechaReserva,
+            horaEntrada,
+            horaSalida,
+            comentarios,
+            dia,
+            accion: "registrar"
         })
     })
     .then(res => res.json())
@@ -31,7 +40,7 @@ function reservar() {
         if (data.success) {
             alert(data.message);
             limpiarCampos();
-            cargarHorarios(); // Refresca la tabla
+            cargarHorarios(); // Actualiza horarios disponibles
         } else {
             alert("Error: " + data.error);
         }
@@ -46,7 +55,7 @@ function limpiarCampos() {
     document.getElementById("nombre").value = "";
     document.getElementById("telefono").value = "";
     document.getElementById("personas").value = "";
-    document.getElementById("dia").value = "";
+    document.getElementById("fecha-reserva").value = "";
     document.getElementById("hora-entrada").value = "";
     document.getElementById("hora-salida").value = "";
     document.getElementById("comentarios").value = "";
@@ -75,9 +84,7 @@ function cargarHorarios() {
             celda.setAttribute("data-hora", h);
             celda.textContent = "Disponible";
             celda.style.textAlign = "center";
-
-            // ✅ Pintar fondo verde por defecto (Disponible)
-            celda.style.backgroundColor = "#d4edda";
+            celda.style.backgroundColor = "#d4edda"; // verde claro
             celda.style.color = "#155724";
             celda.style.fontWeight = "bold";
 
@@ -86,20 +93,29 @@ function cargarHorarios() {
         tabla.appendChild(fila);
     }
 
-    // Marcar los horarios ocupados
+    const diaMap = {
+        'lunes': 'lunes',
+        'martes': 'martes',
+        'miércoles': 'miércoles',
+        'jueves': 'jueves',
+        'viernes': 'viernes',
+        'sábado': 'sábado',
+        'domingo': 'domingo'
+    };
+
     fetch("../Controlador/obtenerHorarios.php")
         .then(res => res.json())
         .then(data => {
             data.forEach(reserva => {
                 const { dia, entrada, salida } = reserva;
-                const diaLower = dia.toLowerCase();
+                const diaMapped = diaMap[dia.toLowerCase()] ?? dia.toLowerCase();
 
                 let start = horas.indexOf(entrada);
                 let end = horas.indexOf(salida);
 
                 if (start !== -1 && end !== -1) {
                     for (let i = start; i < end; i++) {
-                        const celda = document.querySelector(`td[data-dia="${diaLower}"][data-hora="${horas[i]}"]`);
+                        const celda = document.querySelector(`td[data-dia="${diaMapped}"][data-hora="${horas[i]}"]`);
                         if (celda) {
                             celda.textContent = "Reservado";
                             celda.style.backgroundColor = "#f8d7da"; // rojo
@@ -112,9 +128,9 @@ function cargarHorarios() {
         });
 }
 
-
 window.onload = () => {
     cargarHorarios();
+
     fetch("../Controlador/obtenerUsuario.php")
         .then(res => res.json())
         .then(data => {
@@ -122,21 +138,21 @@ window.onload = () => {
                 document.getElementById("nombre-usuario").textContent = data.nombres.split(' ')[0];
             }
         });
+
+    document.querySelector(".search-btn").addEventListener("click", () => {
+        const codigo = document.getElementById("codigo").value.trim();
+        if (!codigo) return;
+
+        fetch(`../../Servidor/Controlador/obtenerEstudiante.php?codigo=${codigo}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                document.getElementById("nombre").value = data.nombres;
+                document.getElementById("telefono").value = data.telefono;
+            });
+    });
 };
-
-document.querySelector(".search-btn").addEventListener("click", () => {
-    const codigo = document.getElementById("codigo").value.trim();
-    if (!codigo) return;
-
-    fetch(`../../Servidor/Controlador/obtenerEstudiante.php?codigo=${codigo}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                alert(data.error);
-                return;
-            }
-
-            document.getElementById("nombre").value = data.nombres;
-            document.getElementById("telefono").value = data.telefono;
-        });
-});

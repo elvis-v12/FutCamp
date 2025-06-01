@@ -9,13 +9,16 @@ try {
     $codigo = $data['codigo'];
     $telefono = $data['telefono'];
     $num_personas = $data['personas'];
-    $dia = ucfirst(strtolower($data['dia']));
-    $hora_entrada = $data['hora_entrada'];
-    $hora_salida = $data['hora_salida'];
+    $dia = $data['dia'];
+    $fechaReserva = $data['fechaReserva'];
+    $hora_entrada = $data['horaEntrada'];
+    $hora_salida = $data['horaSalida'];
     $comentarios = $data['comentarios'];
-    $fecha = date("Y-m-d"); // fecha actual
+
+    // ✅ Usuario que realiza la acción
     $id_usuario = $_SESSION['id_usuario'] ?? 1;
 
+    // Validación de horas
     if (strtotime($hora_entrada) >= strtotime($hora_salida)) {
         echo json_encode(["error" => "La hora de entrada debe ser menor que la de salida."]);
         exit;
@@ -38,11 +41,11 @@ try {
 
     $id_estudiante = $estudiante['id_estudiante'];
 
-    // Validar si ya tiene reserva activa para hoy
+    // Validar si ya tiene reserva activa para esa fecha
     $stmt = $db->prepare("SELECT COUNT(*) FROM reserva WHERE id_estudiante = ? AND dia_reserva = ?");
-    $stmt->execute([$id_estudiante, $fecha]);
+    $stmt->execute([$id_estudiante, $fechaReserva]);
     if ($stmt->fetchColumn() > 0) {
-        echo json_encode(["error" => "Ya tienes una reserva registrada para hoy."]);
+        echo json_encode(["error" => "Ya tienes una reserva registrada para esa fecha."]);
         exit;
     }
 
@@ -68,7 +71,7 @@ try {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, 'Activa', ?, ?)
     ");
     $stmt->execute([
-        $id_estudiante, $telefono, $num_personas, $fecha,
+        $id_estudiante, $telefono, $num_personas, $fechaReserva,
         $hora_entrada, $hora_salida, $comentarios, $id_usuario, $id_horario
     ]);
 

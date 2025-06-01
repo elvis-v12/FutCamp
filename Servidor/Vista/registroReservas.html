@@ -124,19 +124,11 @@
                                 <input type="number" id="personas" placeholder="Cantidad de participantes" min="1">
                             </div>
 
-                            <div class="form-group">
-                                <label for="dia">Día de la Reserva</label>
-                                <select id="dia">
-                                    <option value="">Seleccione un día</option>
-                                    <option value="lunes">Lunes</option>
-                                    <option value="martes">Martes</option>
-                                    <option value="miercoles">Miércoles</option>
-                                    <option value="jueves">Jueves</option>
-                                    <option value="viernes">Viernes</option>
-                                    <option value="sabado">Sábado</option>
-                                    <option value="domingo">Domingo</option>
-                                </select>
+                           <div class="form-group">
+                            <label for="fecha-reserva">Fecha de la Reserva</label>
+                            <input type="date" id="fecha-reserva" min="<?php echo date('Y-m-d'); ?>">
                             </div>
+
 
                             <div class="time-group">
                                 <div class="form-group">
@@ -284,6 +276,23 @@
     <script src="../Vista/js/Registro_Reservas.js"></script>
     <script src="./js/Registro_Reservas.js"></script>
     <script src="../Vista/js/logout.js"></script>
+
+    <script>
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebar-overlay");
+  
+  sidebar.classList.toggle("open");
+  if (sidebar.classList.contains("open")) {
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+  } else {
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
+</script>
+
 </body>
 
 </html>
