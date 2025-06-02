@@ -22,13 +22,10 @@ if (!isset($_POST['email']) && isset($_SESSION['id_usuario'])) {
 $response = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email'] ?? '');
+    $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // Asegura que el correo termine en @ucvvirtual.edu.pe
-    if (!str_ends_with($email, '@ucvvirtual.edu.pe')) {
-        $email .= '@ucvvirtual.edu.pe';
-    }
+    $email = $email . '@ucvvirtual.edu.pe';
 
     $sql = "SELECT * FROM usuarios WHERE correo = :email";
 
@@ -51,8 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode(['success' => true, 'redirect' => '../Vista/gestionEstudiantes.html']);
                     exit;
                 } else {
-                    error_log("⚠️ Contraseña ingresada: $password");
-                    error_log("⚠️ Hash en BD: " . $usuario["contra"]);
                     $response['success'] = false;
                     $response['error'] = 'Contraseña incorrecta';
                 }
