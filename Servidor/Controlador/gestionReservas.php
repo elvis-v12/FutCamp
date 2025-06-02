@@ -5,7 +5,6 @@ require_once("../Modelo/database.php");
 
 try {
     if ($_SERVER["REQUEST_METHOD"] === "GET") {
-        // Obtener todas las reservas con datos asociados
         $stmt = $db->prepare("
             SELECT 
                 r.id_reserva AS id_reserva,
@@ -32,67 +31,80 @@ try {
         $data = json_decode(file_get_contents("php://input"), true);
         $accion = $data["accion"] ?? "";
 
-        // ---------------- EDITAR RESERVA ----------------
         if ($accion === "editar") {
             $id = $data['id'];
             $telefono = $data['telefono'];
             $personas = $data['personas'];
-            $dia = ucfirst(strtolower($data['dia']));
+            $dia = $data['dia']; // formato YYYY-MM-DD
             $horaEntrada = $data['horaEntrada'];
             $horaSalida = $data['horaSalida'];
             $comentarios = $data['comentarios'];
 
             if (strtotime($horaEntrada) >= strtotime($horaSalida)) {
-                echo json_encode(["error" => "La hora de entrada debe ser menor que la hora de salida"]);
+                echo json_encode(["error" => "La hora de entrada debe ser menor que la de salida"]);
                 exit;
             }
 
-            // Buscar o insertar horario
-            $stmt = $db->prepare("SELECT id_horario FROM horarios WHERE dia = ? AND hora_inicio = ? AND hora_fin = ?");
-            $stmt->execute([$dia, $horaEntrada, $horaSalida]);
-            $horario = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Convertir fecha a nombre del día en español
+            $fechaObj = new DateTime($dia);
+            $nombre_dia = strtolower($fechaObj->format('l'));
+            $dias_es = [
+                "monday" => "lunes",
+                "tuesday" => "martes",
+                "wednesday" => "miércoles",
+                "thursday" => "jueves",
+                "friday" => "viernes",
+                "saturday" => "sábado",
+                "sunday" => "domingo"
+            ];
+            $diaTexto = $dias_es[$nombre_dia];
 
-            if (!$horario) {
-                $stmt = $db->prepare("INSERT INTO horarios (dia, hora_inicio, hora_fin, estado) VALUES (?, ?, ?, 0)");
-                $stmt->execute([$dia, $horaEntrada, $horaSalida]);
-                $id_horario = $db->lastInsertId();
-            } else {
-                $id_horario = $horario['id_horario'];
+            // Obtener id_horario actual de la reserva
+            $stmt = $db->prepare("SELECT id_horario FROM reserva WHERE id_reserva = ?");
+            $stmt->execute([$id]);
+            $reserva = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$reserva) {
+                echo json_encode(["error" => "Reserva no encontrada"]);
+                exit;
             }
 
-            // Actualizar reserva
+            $id_horario = $reserva['id_horario'];
+
+            // Actualizar la tabla horarios con el día como texto y las horas
+            $stmt = $db->prepare("UPDATE horarios SET dia = ?, hora_inicio = ?, hora_fin = ? WHERE id_horario = ?");
+            $stmt->execute([$diaTexto, $horaEntrada, $horaSalida, $id_horario]);
+
+            // Actualizar tabla reserva con la fecha original
             $stmt = $db->prepare("
                 UPDATE reserva 
                 SET telefono = ?, num_personas = ?, dia_reserva = ?, 
-                    hora_entrada = ?, hora_salida = ?, comentarios = ?, id_horario = ?
+                    hora_entrada = ?, hora_salida = ?, comentarios = ?
                 WHERE id_reserva = ?
             ");
             $stmt->execute([
-                $telefono, $personas, date("Y-m-d"), // puedes cambiar esta línea si deseas conservar la fecha anterior
+                $telefono, $personas, $dia,
                 $horaEntrada, $horaSalida, $comentarios,
-                $id_horario, $id
+                $id
             ]);
 
             echo json_encode(["success" => true, "message" => "Reserva actualizada correctamente."]);
             exit;
         }
 
-      // ---------------- DESACTIVAR RESERVA ----------------
-if ($accion === "desactivar") {
-    $id = $data['id'];
-    $stmt = $db->prepare("UPDATE reserva SET estado = 'inactiva' WHERE id_reserva = ?");
-    $stmt->execute([$id]);
-    echo json_encode(["success" => true, "message" => "Reserva desactivada correctamente."]);
-    exit;
-}
+        if ($accion === "desactivar") {
+            $id = $data['id'];
+            $stmt = $db->prepare("UPDATE reserva SET estado = 'inactiva' WHERE id_reserva = ?");
+            $stmt->execute([$id]);
+            echo json_encode(["success" => true, "message" => "Reserva desactivada correctamente."]);
+            exit;
+        }
 
-        // Acción no reconocida
-        echo json_encode(["error" => "Acción no reconocida."]);
+        echo json_encode(["error" => "Acción no reconocida"]);
         exit;
     }
 
-    // Método no permitido
-    echo json_encode(["error" => "Método HTTP no permitido."]);
+    echo json_encode(["error" => "Método HTTP no permitido"]);
 } catch (PDOException $e) {
     echo json_encode(["error" => $e->getMessage()]);
 }

@@ -12,7 +12,8 @@ try {
             h.hora_fin,
             r.telefono,
             r.num_personas AS personas,
-            r.comentarios
+            r.comentarios,
+            r.dia_reserva
         FROM reserva r
         INNER JOIN estudiantes e ON r.id_estudiante = e.id_estudiante
         INNER JOIN horarios h ON r.id_horario = h.id_horario
@@ -50,7 +51,8 @@ try {
             "duracion" => $duracion,
             "telefono" => $row['telefono'],
             "personas" => (int)$row['personas'],
-            "comentarios" => $row['comentarios']
+            "comentarios" => $row['comentarios'],
+            "fecha" => $row['dia_reserva']  // ← ✅ NUEVO CAMPO para filtrado por semana
         ];
     }
 

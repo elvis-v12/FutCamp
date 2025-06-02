@@ -18,7 +18,11 @@ function reservar() {
         return;
     }
 
-    const dia = new Date(fechaReserva).toLocaleDateString("es-ES", { weekday: 'long' }).toLowerCase();
+    const [diaStr, mesStr, anioStr] = fechaReserva.split("/");
+const fechaISO = `${anioStr}-${mesStr}-${diaStr}`;
+const dia = new Date(fechaISO).toLocaleDateString("es-ES", { weekday: 'long' }).toLowerCase();
+console.log("Día interpretado:", dia);  // te mostrará 'lunes', 'martes', etc.
+
 
     fetch("../Controlador/Registro_reserva.php", {
         method: "POST",

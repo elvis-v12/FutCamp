@@ -18,7 +18,13 @@ function cargarHistorial() {
         console.error("Respuesta inesperada:", data);
         return;
       }
-      historialReservas = data;
+
+      //  Normaliza estado a minúsculas
+      historialReservas = data.map(r => ({
+        ...r,
+        estado: r.estado.toLowerCase()
+      }));
+
       historialFiltrado = [...historialReservas];
       renderizarHistorial();
       actualizarContadores();
@@ -104,7 +110,7 @@ function filtrarHistorial() {
   historialFiltrado = historialReservas.filter(r => {
     const nombreMatch = r.nombres.toLowerCase().includes(busqueda);
     const estadoMatch = estado ? r.estado.toLowerCase() === estado : true;
-    const mesMatch = mes !== "" ? new Date(r.fechaReserva).getMonth().toString() === mes : true;
+    const mesMatch = mes !== "" ? new Date(r.dia).getMonth().toString() === mes : true;
     return nombreMatch && estadoMatch && mesMatch;
   });
 
@@ -112,6 +118,7 @@ function filtrarHistorial() {
   renderizarHistorial();
   actualizarContadores();
 }
+
 
 function limpiarFiltros() {
   document.getElementById("search-input").value = "";

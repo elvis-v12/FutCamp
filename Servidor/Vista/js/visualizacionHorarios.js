@@ -53,27 +53,41 @@ function renderizarHorarios() {
   const tbody = document.getElementById("schedule-tbody");
   tbody.innerHTML = "";
 
+  // Obtener inicio y fin de la semana actual
+  const inicioSemana = new Date(semanaActual);
+  inicioSemana.setDate(semanaActual.getDate() - semanaActual.getDay() + 1); // Lunes
+  inicioSemana.setHours(0, 0, 0, 0);
+
+  const finSemana = new Date(inicioSemana);
+  finSemana.setDate(inicioSemana.getDate() + 6); // Domingo
+  finSemana.setHours(23, 59, 59, 999);
+
+  // Filtrar solo las reservas dentro del rango de semana actual
+  const reservasSemana = reservasHorarios.filter(r => {
+    const [anio, mes, dia] = r.fecha.split("-").map(Number);
+const fechaReserva = new Date(anio, mes - 1, dia);
+    return fechaReserva >= inicioSemana && fechaReserva <= finSemana;
+  });
+
   horariosDisponibles.forEach((hora) => {
     const fila = document.createElement("tr");
 
-    // Celda de la hora
     const celdaHora = document.createElement("td");
     celdaHora.className = "time-cell";
     celdaHora.textContent = `${hora.toString().padStart(2, "0")}:00`;
     fila.appendChild(celdaHora);
 
     for (let dia = 1; dia <= 7; dia++) {
-      // Verifica si esta celda ya debe estar omitida por rowSpan
-      const yaOmitida = reservasHorarios.some(r =>
+      // Verifica si ya hay una reserva ocupando esa hora (omitida por rowspan)
+      const yaOmitida = reservasSemana.some(r =>
         r.dia === dia && hora > r.hora && hora < r.hora + r.duracion
       );
       if (yaOmitida) continue;
 
       const celda = document.createElement("td");
-      const reserva = reservasHorarios.find(r => r.dia === dia && r.hora === hora);
+      const reserva = reservasSemana.find(r => r.dia === dia && r.hora === hora);
 
       if (reserva) {
-        // Crear celda ocupada
         const divReserva = document.createElement("div");
         divReserva.className = "reservation-cell ocupado";
         divReserva.textContent = reserva.nombres;
@@ -82,7 +96,6 @@ function renderizarHorarios() {
         celda.rowSpan = reserva.duracion;
         celda.appendChild(divReserva);
       } else {
-        // Crear celda disponible
         const divDisponible = document.createElement("div");
         divDisponible.className = "reservation-cell disponible";
         divDisponible.onclick = () => crearNuevaReserva(dia, hora);
@@ -95,6 +108,7 @@ function renderizarHorarios() {
     tbody.appendChild(fila);
   });
 }
+
 
 
 function obtenerReservaPorDiaYHora(dia, hora) {
@@ -114,6 +128,8 @@ function irAHoy() {
 
 function cambiarSemana(direccion) {
   semanaActual.setDate(semanaActual.getDate() + direccion * 7);
+  semanaActual.setDate(semanaActual.getDate() - semanaActual.getDay() + 1); // Forzar lunes
+
   actualizarSemanaActual();
   renderizarHorarios();
   mostrarNotificacion(`Mostrando semana ${direccion === 1 ? "siguiente" : "anterior"}`, "info");
@@ -206,12 +222,21 @@ function actualizarEstadisticas() {
   const totalSlots = 7 * horariosDisponibles.length;
   const ocupados = reservasHorarios.reduce((total, r) => total + r.duracion, 0);
   const disponibles = totalSlots - ocupados;
-  const hoy = new Date().getDay() || 7;
+
+  const hoyFecha = new Date();
+  hoyFecha.setHours(0, 0, 0, 0);
+
+  const reservasHoy = reservasHorarios.filter(r => {
+    const [anio, mes, dia] = r.fecha.split("-").map(Number);
+    const fecha = new Date(anio, mes - 1, dia);
+    return fecha.getTime() === hoyFecha.getTime();
+  });
 
   document.getElementById("stat-disponibles").textContent = disponibles;
   document.getElementById("stat-ocupadas").textContent = ocupados;
-  document.getElementById("stat-hoy").textContent = reservasHorarios.filter(r => r.dia === hoy).length;
+  document.getElementById("stat-hoy").textContent = reservasHoy.length;
 }
+
 
 function mostrarNotificacion(mensaje, tipo = "info") {
   const noti = document.createElement("div");

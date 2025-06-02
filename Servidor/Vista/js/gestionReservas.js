@@ -9,17 +9,19 @@ fetch("../../Servidor/Controlador/gestionReservas.php")
   .then((response) => response.json())
   .then((data) => {
     reservas = data.map((reserva) => ({
-      ...reserva,
-      id: reserva.id_reserva,
-      nombre: reserva.nombres,
-      personas: reserva.num_personas,
-      horaEntrada: reserva.hora_entrada.substring(0, 5),
-      horaSalida: reserva.hora_salida.substring(0, 5),
-      dia: reserva.dia_reserva.toLowerCase(),
-      fechaCreacion: new Date(reserva.fechaCreacion),
-      comentarios: reserva.comentarios || "",
-      estado: reserva.estado.toLowerCase()
-    }))
+  ...reserva,
+  id: reserva.id_reserva,
+  nombre: reserva.nombres,
+  telefono: reserva.telefono,
+  personas: reserva.num_personas,
+  horaEntrada: reserva.hora_entrada.substring(0, 5),
+  horaSalida: reserva.hora_salida.substring(0, 5),
+  dia: reserva.dia_reserva,  // ✅ aquí se conserva la fecha correctamente
+  fechaCreacion: new Date(), // si no usas esto, puedes quitarlo
+  comentarios: reserva.comentarios || "",
+  estado: reserva.estado.toLowerCase()
+}))
+
     reservasFiltradas = [...reservas]
     renderizarReservas()
     actualizarContadores()
@@ -117,24 +119,29 @@ reservasPagina.forEach((reserva, index) => {
 
   actualizarPaginacion()
 }
-
 function filtrarReservas() {
-  const searchTerm = document.getElementById("search-input").value.toLowerCase()
-  const filterDay = document.getElementById("filter-day").value
+  const searchTerm = document.getElementById("search-input").value.toLowerCase();
+  const filterDay = document.getElementById("filter-day").value;
 
   reservasFiltradas = reservas.filter((reserva) => {
     const matchesSearch =
       reserva.nombre.toLowerCase().includes(searchTerm) ||
       reserva.telefono.includes(searchTerm) ||
-      reserva.comentarios.toLowerCase().includes(searchTerm)
-    const matchesDay = !filterDay || reserva.dia === filterDay
-    return matchesSearch && matchesDay
-  })
+      reserva.comentarios.toLowerCase().includes(searchTerm);
+const [anio, mes, dia] = reserva.dia_reserva.split("-");
+const fechaReserva = new Date(anio, mes - 1, dia);
+const diaSemana = fechaReserva.toLocaleDateString("es-ES", { weekday: "long" }).toLowerCase();
 
-  paginaActual = 1
-  renderizarReservas()
-  actualizarContadores()
+    const matchesDay = !filterDay || diaSemana === filterDay;
+
+    return matchesSearch && matchesDay;
+  });
+
+  paginaActual = 1;
+  renderizarReservas();
+  actualizarContadores();
 }
+
 
 function limpiarFiltros() {
   document.getElementById("search-input").value = ""
@@ -153,7 +160,7 @@ function editarReserva(id) {
   document.getElementById("edit-nombre").value = reservaEditando.nombre
   document.getElementById("edit-telefono").value = reservaEditando.telefono
   document.getElementById("edit-personas").value = reservaEditando.personas
-  document.getElementById("edit-dia").value = reservaEditando.dia
+  document.getElementById("edit-dia").value = reservaEditando.dia   // <-- AQUÍ
   document.getElementById("edit-hora-entrada").value = reservaEditando.horaEntrada
   document.getElementById("edit-hora-salida").value = reservaEditando.horaSalida
   document.getElementById("edit-comentarios").value = reservaEditando.comentarios
@@ -161,6 +168,7 @@ function editarReserva(id) {
   document.getElementById("edit-modal").style.display = "block"
   document.body.style.overflow = "hidden"
 }
+
 
 function guardarEdicion() {
   if (!reservaEditando) return
