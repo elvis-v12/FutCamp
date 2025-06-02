@@ -513,7 +513,7 @@ body {
   padding: 0;
   border: 1px solid #e5e7eb;
   height: 50px;
-  vertical-align: middle;
+  vertical-align: top;
   position: relative;
 }
 
@@ -551,12 +551,17 @@ body {
 }
 
 .reservation-cell.ocupado {
-  background: linear-gradient(135deg, #c40000 0%, #be2a2a 100%);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #b71c1c, #d32f2f);
   color: white;
-  font-weight: 600;
-  font-size: 12px;
-  text-align: center;
+  font-weight: bold;
+  border-radius: 4px;
   padding: 4px;
+  box-sizing: border-box;
 }
 
 .reservation-cell:hover {
@@ -951,4 +956,19 @@ body {
   .schedule-table {
     font-size: 12px !important;
   }
+}
+
+.schedule-table td[rowspan] {
+  position: relative;
+  padding: 0;
+}
+
+.schedule-table td[rowspan] > .reservation-cell.ocupado {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
 }

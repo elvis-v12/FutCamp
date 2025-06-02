@@ -104,15 +104,16 @@
                         </div>
                         <div class="filter-buttons">
                             <select id="filter-day" onchange="filtrarReservas()">
-                                <option value="">Todos los días</option>
-                                <option value="lunes">Lunes</option>
-                                <option value="martes">Martes</option>
-                                <option value="miercoles">Miércoles</option>
-                                <option value="jueves">Jueves</option>
-                                <option value="viernes">Viernes</option>
-                                <option value="sabado">Sábado</option>
-                                <option value="domingo">Domingo</option>
+                            <option value="">Todos los días</option>
+                            <option value="lunes">Lunes</option>
+                            <option value="martes">Martes</option>
+                            <option value="miércoles">Miércoles</option>
+                            <option value="jueves">Jueves</option>
+                            <option value="viernes">Viernes</option>
+                            <option value="sábado">Sábado</option>
+                            <option value="domingo">Domingo</option>
                             </select>
+
                             <button class="btn-filter" onclick="limpiarFiltros()">
                                 <i class="fas fa-filter"></i>
                                 Limpiar Filtros
@@ -204,19 +205,10 @@
                             <label for="edit-personas">Número de Personas</label>
                             <input type="number" id="edit-personas" min="1" required>
                         </div>
-                        <div class="form-group">
-                            <label for="edit-dia">Día</label>
-                            <select id="edit-dia" required>
-                                <option value="">Seleccionar día</option>
-                                <option value="lunes">Lunes</option>
-                                <option value="martes">Martes</option>
-                                <option value="miercoles">Miércoles</option>
-                                <option value="jueves">Jueves</option>
-                                <option value="viernes">Viernes</option>
-                                <option value="sabado">Sábado</option>
-                                <option value="domingo">Domingo</option>
-                            </select>
-                        </div>
+                          <div class="form-group">
+                            <label for="edit-dia">Fecha de la Reserva</label>
+                            <input type="date" id="edit-dia" min="<?php echo date('Y-m-d'); ?>">
+                            </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">

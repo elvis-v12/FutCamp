@@ -4,12 +4,14 @@ require_once("../Modelo/database.php");
 
 $stmt = $db->query("
     SELECT 
-        DAYNAME(dia_reserva) AS dia,
-        TIME_FORMAT(hora_entrada, '%H:%i') AS entrada,
-        TIME_FORMAT(hora_salida, '%H:%i') AS salida
-    FROM reserva
-    WHERE estado = 'Activa'
+        LOWER(h.dia) AS dia,
+        DATE_FORMAT(h.hora_inicio, '%H:%i') AS entrada,
+        DATE_FORMAT(h.hora_fin, '%H:%i') AS salida
+    FROM horarios h
+    INNER JOIN reserva r ON h.id_horario = r.id_horario
+    WHERE h.estado = 0 AND r.estado = 'Activa'
 ");
+
 
 $horarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 echo json_encode($horarios);
