@@ -4,14 +4,16 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Recuperación de contraseña</title>
-    <link rel="icon" type="image/x-icon" href="../Cliente/img/ucvitoFut.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restablecer Contraseña</title>
+    <link rel="icon" type="image/x-icon" href="img/ucvitoFut.ico">
     <link rel="stylesheet" href="../Vista/css/r-password.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="images/logo.png" type="image/jpeg">
 </head>
+
 <body>
     <div class="container" id="container">
         <div class="form-container">
@@ -32,6 +34,7 @@ session_start();
         </div>
     </div>
 </body>
+
 </html>
 
 <?php

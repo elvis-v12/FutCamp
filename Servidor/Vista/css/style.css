@@ -25,7 +25,7 @@ body {
   background: #fff;
   border: none;
   backdrop-filter: none;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   color: #333;
   border-radius: 20px;
   padding: 40px 35px;
@@ -49,7 +49,7 @@ body {
 }
 
 .wrapper h1 {
-  font-size: 38px;
+  font-size: 35px;
   font-weight: bold;
   text-align: center;
   color: #c40000;
@@ -155,28 +155,23 @@ optgroup {
 }
 
 .wrapper .btn {
-  width: 100%;
-  height: auto;
-  background: #c40000;
-  border: none;
-  outline: none;
-  border-radius: 25px;
-  box-shadow: 0 4px 15px rgba(196, 0, 0, 0.3);
-  cursor: pointer;
-  font-size: 14px;
+  margin-top: 20px;
+  border-radius: 20px;
+  border: 1px solid #c40000;
+  background: #be2a2a;
   color: #fff;
-  font-weight: 600;
-  padding: 15px 45px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-top: 25px;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .wrapper .btn:hover {
-  background: #a30000;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(196, 0, 0, 0.4);
+  background: #fff;
+  color: #c40000;
 }
 
 .wrapper .register-link {
@@ -198,20 +193,9 @@ optgroup {
   color: #a30000;
 }
 
-.logo {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 25px;
-}
-
-.logo img {
-  width: 100px;
-  height: 100px;
-}
-
 .wrapper img {
+  height: 180px;
+  width: 180px;
   background: none;
   border: none;
   box-shadow: none;
