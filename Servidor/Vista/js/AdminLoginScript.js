@@ -1,39 +1,46 @@
-/* js para el login */
-
-const container = document.getElementById('container');
-const overlayCon = document.getElementById('overlayCon');
-const overlayBtn = document.getElementById('overlayBtn');
-
-overlayBtn.addEventListener('click', () => {
-    container.classList.toggle('right-panel-active');
-
-    overlayBtn.classList.remove('btnScaled');
-    window.requestAnimationFrame( () => {
-        overlayBtn.classList.add('btnScaled');
-    });
-});
-
-//Script para el login
 document.addEventListener('DOMContentLoaded', function () {
-    // Middleware inverso: si ya hay sesión activa, redirige al dashboard
-fetch('../Controlador/Admin_login.php', {
-    method: 'POST',
-    body: new URLSearchParams({ verificar_sesion: true })
-})
-.then(res => res.json())
-.then(data => {
-    if (data.success && data.redirect) {
-        window.location.href = data.redirect;
+    const container = document.getElementById('container');
+    const overlayCon = document.getElementById('overlayCon');
+    const overlayBtn = document.getElementById('overlayBtn');
+
+    // Alternar entre login y registro desde botones del overlay
+    const allOverlayButtons = document.querySelectorAll('.overlay-panel button');
+    allOverlayButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            container.classList.toggle('right-panel-active');
+        });
+    });
+
+    // Botón invisible adicional, por si se usa
+    if (overlayBtn) {
+        overlayBtn.addEventListener('click', () => {
+            container.classList.toggle('right-panel-active');
+            overlayBtn.classList.remove('btnScaled');
+            window.requestAnimationFrame(() => {
+                overlayBtn.classList.add('btnScaled');
+            });
+        });
     }
-});
 
+    // Middleware inverso: redirige si ya hay sesión activa
+    fetch('../Controlador/Admin_login.php', {
+        method: 'POST',
+        body: new URLSearchParams({ verificar_sesion: true })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success && data.redirect) {
+            window.location.href = data.redirect;
+        }
+    });
+
+    // FORMULARIO DE LOGIN
     const loginForm = document.querySelector('.sign-in-container form');
-
     loginForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         const emailInput = loginForm.querySelector('input[type="text"]');
-        const passwordInput = loginForm.querySelector('input[type="password"]');
+        const passwordInput = loginForm.querySelector('#login-password');
 
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
@@ -42,10 +49,12 @@ fetch('../Controlador/Admin_login.php', {
             alert("Completa todos los campos.");
             return;
         }
-      if (email.includes('@')) {
+
+        if (email.includes('@')) {
             alert("Solo escribe tu usuario, no incluyas @ucvvirtual.edu.pe");
             return;
         }
+
         const formData = new FormData();
         formData.append('email', email);
         formData.append('password', password);
@@ -67,12 +76,9 @@ fetch('../Controlador/Admin_login.php', {
             alert('Error en el servidor. Inténtalo más tarde.');
         });
     });
-});
 
-//Scrip para el registro
-document.addEventListener('DOMContentLoaded', function () {
+    // FORMULARIO DE REGISTRO
     const registerForm = document.querySelector('.sign-up-container form');
-
     registerForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -85,8 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Registro exitoso. Ahora puedes iniciar sesión.");
-                window.location.href = "../Vista/index.html";
+                window.location.href = data.redirect;
             } else {
                 alert(data.error || 'Error en el registro.');
             }
